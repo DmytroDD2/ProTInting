@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="35.5557" viewBox="0 0 40 35.5557">
+	<defs>
+		<clipPath id="clipPath5169349628">
+			<path d="M0 0L40 0L40 35.5556L0 35.5556L0 0Z" fill-rule="nonzero" transform="matrix(1 0 0 1 0 5.34058e-05)"/>
+		</clipPath>
+	</defs>
+	<g clip-path="url(#clipPath5169349628)">
+		<defs>
+			<clipPath id="clipPath2354486845">
+				<path d="M0 0L40 0L40 35.5556L0 35.5556L0 0Z" fill-rule="nonzero" transform="matrix(1 0 0 1 0 5.34058e-05)"/>
+			</clipPath>
+		</defs>
+		<g clip-path="url(#clipPath2354486845)">
+			<path d="M16.5834 1.09955L12.0486 9.27239L1.90281 10.5872C0.0833664 10.8218 -0.6458 12.8156 0.673644 13.9576L8.01392 20.3156L6.27781 29.2971C5.96531 30.9205 7.88892 32.1366 9.50003 31.3773L18.5764 27.1366L27.6528 31.3773C29.2639 32.1304 31.1875 30.9205 30.875 29.2971L29.1389 20.3156L36.4792 13.9576C37.7986 12.8156 37.0695 10.8218 35.25 10.5872L25.1042 9.27239L20.5695 1.09955C19.757 -0.357242 17.4028 -0.375761 16.5834 1.09955Z" fill-rule="nonzero" transform="matrix(1 0 0 1 1.42358 1.97455)" fill="rgb(68, 97, 242)"/>
+		</g>
+	</g>
+</svg>

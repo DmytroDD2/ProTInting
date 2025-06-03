@@ -1,0 +1,146 @@
+---
+// src/components/Footer.astro
+const { lang } = Astro.props;
+const currentYear = new Date().getFullYear();
+import YouTubeIcon from '@/assets/youtube.svg';
+import InstagramIcon from '@/assets/instagram.svg';
+import FacebookIcon from '@/assets/facebook.svg';
+import TikTokIcon from '@/assets/tiktok.svg';
+
+const currentPath = Astro.url.pathname
+const t = await import(`../translations/${lang}.json`).catch(() => ({}));
+
+---
+
+<footer class="footer">
+  <div class="inf">
+    <section class="contacts">
+      <h3>{t.menu.contacts}</h3>
+      <ul>
+        <li>123 Main Street, City</li>
+        <li>Phone: +1 (123) 456-7890</li>
+        <li>Email:2Y9uS@example.com</li>
+      </ul>
+    </section>
+
+    <section class="services">
+      <h3>{t.menu.services}</h3>
+      <ul>
+        {t.info.services.map(
+          (contact: string) =>
+           <li>{contact}</li>
+           )
+        }
+      </ul>
+    </section>
+  </div>
+
+<div class="social-media">
+  <!-- <a href="">
+    <FacebookIcon class='icons' />
+  </a> -->
+  <a href="https://www.instagram.com/detailing_centr_hk?igsh=OGtjcmlrbjJvcDh2&utm_source=qr" >
+    <InstagramIcon class='icons'/>
+  </a>
+  <a href="https://www.tiktok.com/@auto.face?_t=ZN-8wQxEWNb17O&_r=1">
+    <TikTokIcon href="https://www.tiktok.com/@auto.face?_t=ZN-8wQxEWNb17O&_r=1" class='icons'/>
+  </a>
+  <!-- <a href="">
+    <YouTubeIcon class='icons'/>
+  </a> -->
+</div>
+
+ 
+</footer>
+
+<style>
+  .icons {
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+  display: block;
+}
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: #f3f4f6;
+    padding: 2rem 3rem 2rem 3rem;
+    margin-top: auto;
+    transition: background-color 0.3s ease;
+    background-color: #0A0F1D;
+    color: #E5E7EB;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem
+  
+  }
+
+  .social-media {
+    display: flex;
+    gap: 0;
+  }
+
+  .inf {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+
+/* @media (hover: none) {
+  a:active > .icons,
+  a:focus > .icons {
+    fill: #1E3A8A;
+  }
+} */
+  
+  a:active > .icons,
+  a:focus > .icons {
+    fill: #1E3A8A;
+    
+  }
+  
+  a {
+    padding: 0.5rem;
+  }
+
+  .icons {
+    width: 1.7rem;
+    height: 1.7rem;
+    margin-right: 10px;
+    fill: #FFFFFF;
+    
+    
+    
+  }
+  .dark .footer {
+    background-color: #1f2937;
+  }
+
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .icons {
+    width: 2.5rem;
+    height: 2.5rem;
+    transition: fill 0.1s ease; 
+  }
+  a {
+    padding: 1rem;
+  }
+  }
+
+  
+</style>

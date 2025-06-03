@@ -1,0 +1,204 @@
+---
+import GalleryImage from "@/components/GalleryImage.astro";
+import MainLayout from "../../layouts/MainLayout.astro"
+
+import { generateStaticPaths } from '../../utils/i18n';
+import ImgCarBefore1 from "@/assets/works/1_before.jpg"
+import ImgCarAfter1 from "@/assets/works/1_after.jpg"
+
+import ImgCarBefore2 from "@/assets/works/2_before.jpg"
+import ImgCarAfter2 from "@/assets/works/2_after.jpg"
+
+import ImgCarBefore3 from "@/assets/works/3_before.jpg"
+import ImgCarAfter3 from "@/assets/works/3_after.jpg"
+
+import ImgCarBefore5 from "@/assets/works/5_before.jpg"
+import ImgCarAfter5 from "@/assets/works/5_after.jpg"
+
+import ImgCarBefore6 from "@/assets/works/6_before.jpg"
+import ImgCarAfter6 from "@/assets/works/6_after.jpg"
+
+import ImgCarBefore7 from "@/assets/works/7_before.jpg"
+import ImgCarAfter7 from "@/assets/works/7_after.jpg"
+
+import VideoProcess from "../../assets/videos/process1.mp4"
+import { Image } from "astro:assets";
+
+
+export async function getStaticPaths() {
+  const pageProps = {
+    uaTitle: 'Наші роботи',
+    enTitle: 'Our Works',
+    description: {
+      uk: 'Галерея виконаних робіт з тонування та захисту скла',
+      cs: 'Galerie provedených prací tónování a ochrany skel'
+    },
+    canonicalUrl: {
+      uk: 'https://autotint.ua/works',
+      cs: 'https://autotint.cz/works'
+    }
+  };
+
+  return generateStaticPaths(pageProps);
+}
+
+const { lang } = Astro.params;
+const title = Astro.props.title || 'Astro Basics'; //change later
+
+const translation = await import(`../../translations/${lang}.json`);
+
+
+const works = [
+  { before: ImgCarBefore1, after: ImgCarAfter1 },
+  { before: ImgCarBefore2, after: ImgCarAfter2 },
+  { before: ImgCarBefore3, after: ImgCarAfter3 },
+
+  { before: ImgCarBefore5, after: ImgCarAfter5 },
+  { before: ImgCarBefore6, after: ImgCarAfter6 },
+  { before: ImgCarBefore7, after: ImgCarAfter7 },
+ 
+];
+
+const videos = [
+  VideoProcess,
+  VideoProcess,
+ 
+];
+
+
+---
+
+<MainLayout lang={lang} title={title}>
+
+  <div class="gallery">
+    <!-- <img src={"../../assets/works/1.png"} alt="Before" /> -->
+      <!-- Галерея фото -->
+      <div class="gallery-grid">
+        {
+          works.map((work) => (
+            <GalleryImage
+             before={work.before}
+             after={work.after}
+             translation={translation.works}
+              />
+          ))
+        }
+      </div>
+      <!-- Блок з відео -->
+      <div class="video-grid">
+        {
+          videos.map((video) => (
+            <video
+              src={video}
+              loop
+              muted
+              playsinline
+              
+              class="gallery-video"
+            
+            ></video>
+          ))
+        }
+      </div>
+      <!-- Кнопка CTA -->
+      <!-- <div class="cta-container">
+        <a href="/zapis" class="cta-button">Зробити так само</a>
+      </div> -->
+  </div>
+</MainLayout>
+<script>
+  function setupVideoAutoplay() {
+    const videos = document.querySelectorAll(".gallery-video");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+        
+          video.play().catch(e => console.log("Error playing video", e));
+        } else {
+          video.pause();
+        }
+      });
+    }, {
+      threshold: 0.7 
+    });
+
+  
+    videos.forEach(video => {
+      observer.observe(video);
+    });
+  }
+
+
+  document.addEventListener("DOMContentLoaded", setupVideoAutoplay);
+  document.addEventListener("astro:after-swap", setupVideoAutoplay);
+</script>
+<style >
+  
+
+
+    .gallery {
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+      /* background-color: #000; */
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .gallery-video {
+      
+      width: 100%;
+      height: auto;
+      border: 1px solid #333;
+      transition: transform 0.3s;
+    }
+
+    .gallery-video:hover {
+
+      transform: scale(1.02);
+    }
+
+    .cta-container {
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #000;
+      color: white;
+      border: 2px solid white;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+      background-color: white;
+      color: black;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid, .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</Layout>

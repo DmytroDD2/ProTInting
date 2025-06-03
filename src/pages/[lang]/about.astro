@@ -1,0 +1,18 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+
+import { generateStaticPaths } from '../../utils/i18n';
+
+export async function getStaticPaths() {
+  return generateStaticPaths();
+}
+
+const { lang } = Astro.params;
+const title = Astro.props.title || 'Astro Basics'; //change later
+const translation = await import(`../../translations/${lang}.json`);
+console.log(translation.home);
+---
+
+<MainLayout lang={lang} title={title}>
+  <h1>About</h1>
+</MainLayout>

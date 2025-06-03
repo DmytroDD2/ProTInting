@@ -1,0 +1,172 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ContactItem from "@/assets/img/contact_car.png";
+import PointSvg from "@/assets/contacts_images/point.svg"
+import EnvelopSvg from "@/assets/contacts_images/envelop.svg"
+import CallSvg from "@/assets/contacts_images/call.svg"
+import ClockSvg from "@/assets/contacts_images/clock.svg"
+import { generateStaticPaths } from '@/utils/i18n';
+import ImageTitle from "../../components/ImageTitle.astro";
+import { Image } from "astro:assets";
+import ImageCar from "@/assets/img/contact_car.png"
+// export async function getStaticPaths() {
+//   return generateStaticPaths();
+// }
+
+
+export async function getStaticPaths() {
+  const pageProps = {
+    uaTitle: 'Контакти',
+    enTitle: 'Contacts',
+    description: {
+      uk: 'Зв’яжіться з нами для отримання додаткової інформації',
+      cs: 'Kontaktujte nás pro více informací'
+    },
+    canonicalUrl: {
+      uk: 'https://autotint.ua/kontakty',
+      cs: 'https://autotint.cz/kontakty'
+    }
+  };
+
+  return generateStaticPaths(pageProps);
+}
+
+
+
+
+
+const { lang } = Astro.params;
+const title = Astro.props.title || 'Astro Basics'; //change later
+const translation = await import(`../../translations/${lang}.json`);
+console.log(translation.home);
+---
+
+<MainLayout lang={lang} title={title} >
+  <div class="flex flex-col gap-15">
+    <ImageTitle
+     translation={translation}
+     title={translation.contacts.main_title}
+     discription={translation.contacts.main_text}
+     urlImage={ImageCar} 
+    />
+    
+    <div class="flex  justify-center  gap-2 max-sm:flex-col" >
+      <section class="card class-bg ">
+        <PointSvg class="icon"/>
+        <h2>{translation.contacts.vanue.title}</h2>
+        <div>
+          <p>{translation.contacts.vanue.city}</p>
+          <p>{translation.contacts.vanue.street}</p>
+        </div>
+      </section>
+      <section class="card class-bg ">
+        <CallSvg class="icon"/>
+        <h2>{translation.contacts.phone.title}</h2>
+        <p>+380 44 123 45 67</p>
+      </section>
+      <section class="card class-bg ">
+        <EnvelopSvg class="icon"/>
+        <h2>{translation.contacts.envelop.title}</h2>
+        <p>info@example.com</p>
+      </section>
+    </div>
+    <section class="class-bg card-style flex flex-row justify-evenly mb-10">
+      <div class="work-schedule">
+        <div class="flex gap-2 items-center">
+          <ClockSvg class="icon"/>
+          <h2 class="font-bold text-3xl">{translation.work_schedule.title}</h2>
+        </div>
+        <div class="work">
+          <p>{translation.work_schedule.title}</p>
+          <p>{translation.work_schedule.range}</p>
+        </div>
+        <div class="work">
+          <p>{translation.work_schedule.day_off_text}</p>
+          <p>{translation.work_schedule.day_off}</p>
+        </div>
+      </div>
+      <div class="end-day">
+        <p>{translation.work_schedule.end_days}</p>
+        <p>10:00 - 16:00</p>
+      </div>
+    
+    </section>
+  </div>
+</MainLayout>
+
+
+<style>
+  .class-bg {
+    background-color: var(--color-bg-nav);
+  }
+  .card-style, .card {
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.1);
+  }
+  .card {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: start;
+    width: 100%;
+    gap:1rem;
+  }
+
+  .card> h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  .icon {
+    width: 4rem;
+    height: 4rem;
+    fill: #1034A6;
+    background-color: rgba(16, 52, 166, 0.1);
+    padding: 1rem;
+    border-radius: 500px;
+
+  }
+
+  .work-schedule, .end-day{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:1rem;
+    /* background-color: antiquewhite; */
+    width: 45%;
+    
+ 
+  }
+
+  .work, .end-day{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:0.2rem;
+  }
+
+  .work > p:first-child, .end-day > p:first-child{
+    color: var(--color-text-nav);
+ 
+  }
+
+  .work > p:last-child, .end-day > p:last-child{
+    color: var(--color-text-nav);
+    font-weight: bold;
+  }
+
+   @media (max-width: 768px) {
+    .work-schedule, .end-day{
+      width: 100%;
+    },
+    .work-schedule{
+      width: 50%;
+    }
+    .end-day{
+      width: 50%;
+    }
+  }
+  
+</style>

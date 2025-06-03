@@ -1,0 +1,226 @@
+---
+import ImageTitle from "@components/ImageTitle.astro";
+import MainLayout from "@layouts/MainLayout.astro";
+import PallishigImage from "@/assets/services/pallishing.png";
+import TiningImage from "@/assets/services/tinting.png";
+import PaintSvg from "@/assets/paint.svg";
+import CarISvg from "@/assets/car_icon.svg";
+import BulbSvg from "@/assets/bulb.svg";
+import QualitySvg from "@/assets/quality.svg";
+import { generateStaticPaths } from '@/utils/i18n';
+import CheckSvg from "@/assets/services/check.svg";
+import CarImage from  "@/assets/services/car.png";
+
+export async function getStaticPaths() {
+  const pageProps = {
+    uaTitle: 'Послуги',
+    enTitle: 'Services',
+    description: {
+      uk: 'Послуги з тонування, полірування, полірування фар та захисту скла для авто',
+      cs: 'Služby tónování, leštění, leštění světlometů a ochrany skel pro automobily'
+    },
+    canonicalUrl: {
+      uk: 'https://autotint.ua/services',
+      cs: 'https://autotint.cz/services'
+    }
+  };
+
+  return generateStaticPaths(pageProps);
+}
+
+const { lang } = Astro.params;
+const title = Astro.props.title || 'Astro Basics'; //change later
+const translation = await import(`../../translations/${lang}.json`);
+
+---
+
+<MainLayout lang={lang} title={title}>
+  <ImageTitle
+    title={translation.services.main_title.title}
+    discription={translation.services.main_title.discription}
+    urlImage={CarImage}
+  />
+ 
+  <section class="service-section">
+    <h2>{translation.services.services.title}</h2>
+    <div class="services-container">
+      
+      <div class="service-card">
+        <img src={PallishigImage.src} alt=''/>
+        
+        <div class="service-content">
+           <h3>{translation.services.services.type.tining.title}</h3>
+           <ul>
+            {(translation.services.services.type.tining.list as string[]).map((item: string) => (
+              <li>
+                <CheckSvg />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src={TiningImage.src} alt="{translation.services.tinting.title}" />
+        <div class="service-content">
+          <h3>{translation.services.services.type.polishing.title}</h3>
+           <ul>
+            {(translation.services.services.type.polishing.list as string[]).map((item: string) => (
+              <li>
+                <CheckSvg />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section">
+    <h2>{translation.services.ditail_polishing.title}</h2>
+    <div class="services-container">
+      <div class="service-card">
+        <div class="service-content">
+          <h3>{translation.services.ditail_polishing.whom.title}</h3>
+           <ul>
+            <li>
+              <CarISvg class="icon"/>
+              {translation.services.ditail_polishing.whom.list[0]}
+            </li>
+            <li>
+              <PaintSvg class="icon"/>
+              {translation.services.ditail_polishing.whom.list[1]}
+            </li>
+            <li>
+              <BulbSvg class="icon"/>
+              {translation.services.ditail_polishing.whom.list[2]}
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="service-card">
+        <div class="service-content">
+          <h3>{translation.services.ditail_polishing.process.title}</h3>
+           <ul>
+            {(translation.services.ditail_polishing.process.list as string[]).map((item: string, index) => (
+              <li>
+                <span
+                 class="bg-blue-500 text-white rounded-full w-6 h-6 mr-2 flex items-center justify-center"
+                 >
+                 {index + 1}
+                 </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-content">
+          <h3>{translation.services.ditail_polishing.result.title}</h3>
+           <ul>
+            {(translation.services.ditail_polishing.result.list as string[]).map((item: string) => (
+              <li>
+                <QualitySvg class=" h-6 w-5 fill-green-400" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      
+      
+    </div>
+  </section>
+</MainLayout>
+
+<style is:global>
+
+  .service-section {
+    padding: 3rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .service-section h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
+
+
+  .services-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .service-card {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+    
+    /* box-shadow: 0 7px 6px rgba(0, 0, 0, 0.1); */
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .service-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .service-content {
+    padding: 1.5rem;
+    background-color: var(--color-bg-nav);
+    height: 100%;
+  }
+
+  .service-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+  }
+
+  .service-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: var(--text-color);
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .service-content li {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-nav);
+  }
+  
+  .icon{
+    fill: #1034A6;
+    width: 2rem;
+    height: 2rem;
+  }
+
+</style>

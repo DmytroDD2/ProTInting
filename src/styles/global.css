@@ -1,0 +1,99 @@
+@import "tailwindcss";
+* {
+  box-sizing: border-box; 
+}
+
+
+:root {
+  /* Світла тема */
+  --color-bg: #F8F9FF;
+  --color-bg-nav:#FFFFFF;
+  --color-bg-geer:#FFFFFF;
+  --color-text-active-nav: #012cac;
+  /* --color-text: #1a1a1a; */
+  --color-text-nav: #4B5563;
+  --color-primary: #2563eb;
+  --color-secondary: #e11d48;
+  --color-border: #e2e8f0;
+  --color-card-bg: #f8fafc;
+  --color-hover: rgba(0, 0, 0, 0.05);
+  
+  /* Розміри */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  
+  /* Тіні */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Темна тема */
+.dark {
+  /* --color-bg: #0d0950; */
+  --color-bg: #111327;
+  --color-bg-nav: #0A0C1B;
+  --color-bg-geer: #0A0C1B;
+  --color-text-active-nav: #698bf3;
+  --color-text: #ffffff;
+  --color-text-nav: #E5E7EB;
+  --color-primary: #3b82f6;
+  --color-secondary: #f43f5e;
+  --color-border: #2d3748;
+  --color-card-bg: #1e1b4b;
+
+  --color-hover: rgba(255, 255, 255, 0.05);
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+}
+
+/* Базові стилі */
+html, body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Навігація */
+.nav-links a {
+  color: var(--color-text);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--color-primary);
+}
+
+/* Картки */
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Кнопки */
+.btn {
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-sm);
+}
+
+/* Форми */
+input, textarea {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+/* Специфічні компоненти */
+.language-switcher .dropdown-menu {
+  background: var(--color-card-bg);
+  border-color: var(--color-border);
+}
+
+.theme-toggle:hover {
+  background: var(--color-hover);
+}
+
+

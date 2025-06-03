@@ -1,0 +1,183 @@
+{
+  "menu": {
+    "home": "Domů",
+    "about": "O nás",
+    "works": "Prace",
+    "contacts": "Kontakt",
+    "services": "Služby"
+  },
+  "home": {
+    "welcome": "Vítejte!",
+    "description": "Prémiové auto fólie ve Lvově."
+  },
+  "about": {
+    "title": "O nás",
+    "services": ["Kompletní potahování", "Antigravitační fólie"]
+  },
+
+  "info": {
+    "contacts": [
+      "123 Main Street, City",
+      "123 Main Street, City",
+      "2Y9uS@example.com"
+    ],
+    "services": [
+      "Kompletní tónování",
+      "Antigravitační fólie",
+      "Ochranná fólie"
+    ]
+   },
+
+  "aboutService": {
+    "title": "Profesionální tónování autoskel",
+    "description": "Prémiová kvalita pro vaše pohodlí ",
+    "materials": {
+      "image": "star.svg",
+      "title": "Trvanlivost",
+      "description": "Používáme fólie certifikované kvality"
+    },
+    "durability": {
+      "image": "cube.svg",
+      "title": "O nás",
+      "description": "Pracujeme s péčí a zodpovědností, protože si vážíme každého, kdo si nás vybere."
+    },
+    "adoptable": {
+      "image": "gear.svg",
+      "title": "Individuální přístup",
+      "description": "K dispozici jsou všechny úrovně zatemnění: od nejtmavší (5 %) po nejsvětlejší (75 %)"
+    },
+    "quality": {
+      "image": "quality.svg",
+      "title": "Kvalita práce",
+      "description": "Kvalitní a precizní realizace  "
+    }
+  },
+
+  "options": [
+    {
+      "image": "/src/assets/img/5.png",
+      "title": "5% Tónování",
+      "description": "Maximální zatemnění"
+    },
+    {
+      "image": "/src/assets/img/20.png",
+      "title": "20% Tónování",
+      "description": "Standardní úroveň"
+    },
+    {
+      "image": "/src/assets/img/35.png",
+      "title": "35% Tónování",
+      "description": "Optimální úroveň"
+    },
+    {
+      "image": "/src/assets/img/50.png",
+      "title": "50% Tónování",
+      "description": "Lehké zatemnění"
+    },
+    {
+      "image": "/src/assets/img/70.png",
+      "title": "70% Tónování",
+      "description": "Ochrana proti UV"
+    },
+    {
+      "image": "/src/assets/img/flim.png",
+      "title": "Atermální fólie",
+      "description": "Speciální ochrana"
+    }
+  ],
+
+  "options_title": "Možnosti tónování",
+
+  "contacts": {
+    "main_title": "Kontaktujte nás",
+    "main_text": "Jsme vždy připraveni odpovědět na vaše dotazy",
+    "vanue": {
+      "title": "Naše adresa",
+      "city": "Hradec Králové",
+      "street": "ul. Puškinská, 1"
+    },
+
+    "phone": {
+      "title": "Zavolejte nám"
+    },
+    "envelop": {
+      "title": "Napište nám"
+    }
+  },
+
+  "work_schedule": {
+    "title": "Pracovní doba",
+    "range": "Pondělí–Pátek",
+    "end_days": "Sobota",
+    "day_off": "Neděle",
+    "day_off_text": "Volný den"
+  },
+
+ 
+  "services": {
+    "main_title": {
+      "title": "Naše služby",
+      "discription": "Profesionální tónování a leštění pro vaše auto"
+    },
+    "services": {
+      "title": "Hlavní služby",
+      "type": {
+        "tining": {
+          "title": "Tónování oken",
+          "list": [
+            "Profesionální materiály",
+            "Vysoká kvalita",
+            "Precizní provedení"
+          ]
+        },
+        "polishing": {
+          "title": "Leštění světlometů",
+          "list": [
+            "Odstranění zažloutnutí",
+            "Obnovení průhlednosti",
+            "Ochranný povlak"
+          ]
+        }
+      }
+    },
+    "ditail_polishing": {
+      "title": "Podrobné informace o leštění světlometů",
+      "whom": {
+      "title": "Pro koho:",
+      "list": [
+        "Auta se zažloutlými, matnými nebo poškrábanými světlomety",
+        "Před prodejem auta (pro lepší vzhled)",
+        "Pro zlepšení propustnosti světla v noci"
+      ]
+      },
+      "process": {
+      "title": "Proces:",
+      "list": [
+        "Čištění povrchu",
+        "Odstranění škrábanců (abrazivní úprava)",
+        "Leštění speciální pastou",
+        "Nanesení ochranného laku nebo fólie"
+      ]
+      },
+      "result": {
+      "title": "Výsledek:",
+      "list": [
+        "Světlomet jako nový (průhlednost +90%)",
+        "Ochrana proti dalšímu žloutnutí",
+        "Lepší světlo na silnici"
+      ]
+      }
+    }
+  },
+
+  "works": {
+    "before": "Pred",
+    "after": "Po",
+    "change_image": {
+      "after": "Klikněte pro zobrazení \"Před\" ",
+      "before": "Klikněte pro zobrazení \"Po\" "
+    }
+  }
+}
+
+

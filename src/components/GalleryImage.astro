@@ -1,0 +1,152 @@
+---
+// src/components/GalleryImage.astro
+import { Image } from "astro:assets";
+
+const { before, after, translation } = Astro.props;
+---
+
+<div class="gallery-item">
+  <div 
+    class="image-switcher"
+    data-before={before.src}
+    data-after={after.src}
+    data-translation-before={translation.change_image.before}
+    data-translation-after={translation.change_image.after}
+    data-text-before={translation.before}
+    data-text-after={translation.after}
+    data-state="before"
+  >
+    <Image 
+      src={before} 
+      alt="Авто до тонування" 
+      class="gallery-image"
+      loading="lazy"
+      
+    />
+    <div onclick="toggleImage(this.parentElement)" class="switch-label">{translation.change_image.before}</div>
+  </div>
+</div>
+
+<!-- lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <!-- <span class="close-btn">&times;</span> -->
+  <img id="lightbox-img" class="lightbox-content">
+  <div class="lightbox-caption"></div>
+</div>
+
+<script is:inline>
+  // change image
+  function toggleImage(element) {
+    const img = element.querySelector('img');
+    const label = element.querySelector('.switch-label');
+    const isBefore = element.dataset.state === 'before';
+    
+    img.src = isBefore ? element.dataset.after : element.dataset.before;
+    img.alt = isBefore ? element.dataset.textAfter : element.dataset.textBefore;
+    label.textContent = isBefore 
+      ? element.dataset.translationAfter 
+      : element.dataset.translationBefore;
+    element.dataset.state = isBefore ? 'after' : 'before';
+  }
+
+  // lightbox
+  function openLightbox(src, alt) {
+    const lightbox = document.getElementById('lightbox');
+    document.getElementById('lightbox-img').src = src;
+    document.querySelector('.lightbox-caption').textContent = alt;
+    lightbox.style.display = 'flex';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+  }
+
+  document.addEventListener('click', (e) => {
+    const img = e.target.closest('.gallery-image');
+    if (!img) return;
+    openLightbox(img.src, img.alt);
+  });
+
+</script>
+
+<style>
+  /* Стилі для перемикача */
+  .gallery-item {
+   
+    max-width: 100%;
+  }
+
+  .image-switcher {
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+
+  .image-switcher:hover {
+    transform: scale(1.02);
+  }
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .switch-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Стилі для лайтбоксу */
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    align-items: start;
+  }
+
+  .lightbox-content {
+    margin-top: 3rem;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+  }
+
+  .lightbox-caption {
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+    color: white;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+  }
+</style>

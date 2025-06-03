@@ -1,0 +1,77 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import {ClientRouter} from 'astro:transitions';
+const { lang, title, description, canonicalUrl, image } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator}>
+  
+  <!-- Основні SEO теги -->
+  <title>{title || 'Astro Basics'}</title>
+  <meta name="description" content={description || 'Default description of your website'} />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href={canonicalUrl || Astro.url.href} />
+
+  <!-- OpenGraph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl || Astro.url.href} />
+  <meta property="og:title" content={title || 'Astro Basics'} />
+  <meta property="og:description" content={description || 'Default description of your website'} />
+  <meta property="og:image" content={image || '/default-social-image.jpg'} />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalUrl || Astro.url.href} />
+  <meta name="twitter:title" content={title || 'Astro Basics'} />
+  <meta name="twitter:description" content={description || 'Default description of your website'} />
+  <meta name="twitter:image" content={image || '/default-social-image.jpg'} />
+
+  <ClientRouter />
+</head>
+
+<body class={Astro.props.theme} >
+  <Header 
+    lang={Astro.props.lang} 
+    currentTheme={Astro.props.theme} 
+    currentPath={Astro.props.currentPath} 
+  />
+  <main>
+    <slot />
+  </main>
+  <Footer lang={Astro.props.lang} />
+</body>
+</html>
+
+<style>
+  html, body {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    /* overflow-x: hidden; */
+
+  }
+  main {
+    padding: 1rem;
+  
+   
+  }
+  @media (max-width: 768px) {
+    html {
+      font-size: 10px;
+    }
+  }
+</style>

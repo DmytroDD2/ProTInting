@@ -1,0 +1,121 @@
+---
+// src/components/LanguageSwitcher.astro
+import { SUPPORTED_LOCALES } from '../utils/i18n';
+const { currentLang = 'uk' } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<div class="language-switcher" >
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-label="Change language" >
+      {currentLang === 'uk' ? '🇺🇦' : '🇨🇿'}
+      <span class="chevron">▼</span>
+    </button>
+    <ul class="dropdown-menu" >
+      {SUPPORTED_LOCALES.map((lang) => (
+        <li>
+          <a 
+            href={currentPath.replace(`/${currentLang}`, `/${lang}`)} 
+            class={currentLang === lang ? 'active' : ''}
+            aria-current={currentLang === lang ? 'true' : 'false'}
+          >
+            {lang === 'uk' ? '🇺🇦 Українська' : '🇨🇿 Čeština'}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .language-switcher {
+    position: relative;
+  }
+
+  .dropdown-toggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+  }
+
+  .dropdown-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .dark .dropdown-toggle {
+    border-color: var(--color-border-dark);
+  }
+
+  .dark .dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .chevron {
+    font-size: 0.6em;
+    transition: transform 0.2s;
+  }
+
+  .dropdown:hover .chevron {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right:0;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    min-width: 120px;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .dropdown-menu {
+    border-color: var(--color-border-dark);
+    background: var(--color-bg-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--color-text);
+    transition: background 0.2s;
+  }
+
+  .dropdown-menu a:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .dark .dropdown-menu a:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .dropdown-menu .active {
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .dropdown-menu .active {
+    background: rgba(255, 255, 255, 0.1);
+  }
+</style>
