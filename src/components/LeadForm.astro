@@ -12,6 +12,7 @@ const  { translation, lang} = Astro.props
   data-netlify="true"
   data-netlify-honeypot="bot-field" 
   class="contact-form"
+  action={`/${lang}/success`}
 >
 
   <input type="hidden" name="form-name" value="contact" />
@@ -97,16 +98,53 @@ const  { translation, lang} = Astro.props
 document.addEventListener('DOMContentLoaded', () => {
   const phoneInput = document.querySelector('input[name="phone"]');
   
-  phoneInput?.addEventListener('input', (e) => {
-
+  const formatPhoneInput = (e) => {
     let value = e.target.value.replace(/[^\d+]/g, '');
     
-
     if (!value.startsWith('+')) {
       value = '+' + value.replace(/^\+/, '');
     }
     
+    value = value.replace(/^(\+)(\d{1,3})(\d{0,3})(\d{0,3})(\d{0,4}).*$/, 
+      (_, p1, p2, p3, p4, p5) => {
+        let result = p1 + p2;
+        if (p3) result += ' ' + p3;
+        if (p4) result += ' ' + p4;
+        if (p5) result += ' ' + p5;
+        return result;
+      }
+    );
+    
+    e.target.value = value;
+  };
 
+
+  phoneInput?.addEventListener('input', formatPhoneInput);
+
+  
+  document.querySelector('form').addEventListener('submit', (e) => {
+    const nameInput = document.querySelector('input[name="name"]');
+    
+    if (!/^[\p{L}\s'-]{2,50}$/u.test(nameInput.value)) {
+      e.preventDefault();
+      alert("Name contains invalid characters");
+      nameInput.focus();
+    }
+  });
+});
+
+
+document.addEventListener('astro:after-swap', () => {
+  const phoneInput = document.querySelector('input[name="phone"]');
+  
+
+  phoneInput?.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/[^\d+]/g, '');
+    
+    if (!value.startsWith('+')) {
+      value = '+' + value.replace(/^\+/, '');
+    }
+    
     value = value.replace(/^(\+)(\d{1,3})(\d{0,3})(\d{0,3})(\d{0,4}).*$/, 
       (_, p1, p2, p3, p4, p5) => {
         let result = p1 + p2;
@@ -120,16 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     e.target.value = value;
   });
 });
-document.querySelector('form').addEventListener('submit', (e) => {
-  const nameInput = document.querySelector('input[name="name"]');
-  
-  if (!/^[\p{L}\s'-]{2,50}$/u.test(nameInput.value)) {
-    e.preventDefault();
-    alert("Name contains invalid characters");
-    nameInput.focus();
-  }
-});
 </script>
+
 
 <style>
 .contact-form {
