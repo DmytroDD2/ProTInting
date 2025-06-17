@@ -5,108 +5,162 @@ import { Image } from "astro:assets";
 const { before, after, translation } = Astro.props;
 ---
 
-<div class="gallery-item">
-  <div 
-    class="image-switcher"
-    data-before={before.src}
-    data-after={after.src}
-    data-translation-before={translation.change_image.before}
-    data-translation-after={translation.change_image.after}
-    data-text-before={translation.before}
-    data-text-after={translation.after}
-    data-state="before"
-  >
-    <Image 
-      src={before} 
-      alt="Авто до тонування" 
-      class="gallery-image"
-      loading="lazy"
-      
-    />
-    <div onclick="toggleImage(this.parentElement)" class="switch-label">{translation.change_image.before}</div>
+<div class="comparison-slider"  role="button">
+  <div class="before">
+    <Image src={before} alt={translation.window_before} tabindex="0" class="gallery-image" loading="lazy" />
   </div>
+  <div class="after">
+    <Image src={after} alt={translation.window_after} tabindex="0" class="gallery-image" loading="lazy" />
+  </div>
+
+  
+  <div class="label label-before">{translation.after}</div>
+  <div class="label label-after">{translation.before}</div>
+
+  <div class="slider-handle">↔</div>
 </div>
 
-<!-- lightbox -->
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
-  <!-- <span class="close-btn">&times;</span> -->
-  <img id="lightbox-img" class="lightbox-content">
+<div id="lightbox" class="lightbox" onclick="closeLightbox()" > 
+
+  <img id="lightbox-img" class="lightbox-content" alt={translation.full_image}>
   <div class="lightbox-caption"></div>
 </div>
 
-<script is:inline>
-  // change image
-  function toggleImage(element) {
-    const img = element.querySelector('img');
-    const label = element.querySelector('.switch-label');
-    const isBefore = element.dataset.state === 'before';
-    
-    img.src = isBefore ? element.dataset.after : element.dataset.before;
-    img.alt = isBefore ? element.dataset.textAfter : element.dataset.textBefore;
-    label.textContent = isBefore 
-      ? element.dataset.translationAfter 
-      : element.dataset.translationBefore;
-    element.dataset.state = isBefore ? 'after' : 'before';
-  }
 
-  // lightbox
+<script is:inline>
+
+
+   // lightbox
   function openLightbox(src, alt) {
+    
     const lightbox = document.getElementById('lightbox');
-    document.getElementById('lightbox-img').src = src;
-    document.querySelector('.lightbox-caption').textContent = alt;
-    lightbox.style.display = 'flex';
+  
+    if(lightbox.style.display === 'flex') {
+      
+      lightbox.style.display = 'none';
+      return
+    }else{
+      
+      document.getElementById('lightbox-img').src = src;
+      document.querySelector('.lightbox-caption').textContent = alt;
+      
+      lightbox.style.display = 'flex';
+    }
+    
+
+
   }
   function closeLightbox() {
     document.getElementById('lightbox').style.display = 'none';
   }
 
+  // Fix: Only open lightbox if
+
   document.addEventListener('click', (e) => {
+     e.stopPropagation();
     const img = e.target.closest('.gallery-image');
     if (!img) return;
     openLightbox(img.src, img.alt);
   });
 
+  // Open lightbox with Enter key when .gallery-image is focused
+  document.addEventListener('keydown', (e) => {
+    e.stopPropagation();
+    if (
+      (e.key === 'Enter' || e.key === ' ')
+      
+    ) {
+      const img = e.target.closest('.gallery-image');
+      if (!img) return;
+      openLightbox(document.activeElement.src, document.activeElement.alt);
+    }
+    
+
+  });
+
+
+  
+  // document.querySelector('.slider-handle').addEventListener('mousedown', function(e) {
+  //   document.addEventListener('mousemove', slideMove);
+  //   document.addEventListener('mouseup', stopSlide);
+  // });
+  
+  // function slideMove(e) {
+  //   const slider = this.closest('.comparison-slider');
+  //   const after = slider.querySelector('.after');
+  //   const percent = (e.clientX - slider.getBoundingClientRect().left) / slider.offsetWidth;
+  //   after.style.width = (1 - percent) * 100 + '%';
+  // }
+  
+  // function stopSlide() {
+  //   document.removeEventListener('mousemove', slideMove);
+  // }
 </script>
-
 <style>
-  /* Стилі для перемикача */
-  .gallery-item {
-   
-    max-width: 100%;
-  }
-
-  .image-switcher {
+  .comparison-slider {
     position: relative;
-    cursor: pointer;
-    aspect-ratio: 4/3;
-    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    aspect-ratio: 16/9;
   }
-
-  .image-switcher:hover {
-    transform: scale(1.02);
+  
+  .before, .after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
   }
-
+  
+  .after {
+    width: 50%; /* Початкова позиція */
+  }
+  
   .gallery-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
   }
-
-  .switch-label {
+  
+  .slider-handle {
     position: absolute;
+    left: 50%;
+    top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.7);
+    width: 4px;
+    background: white;
+    cursor: ew-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 1rem;
+    font-weight: bold;
+    transform: translateX(-50%);
   }
+  
+  .label {
+  position: absolute;
+  padding: 8px 15px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border-radius: 4px;
+  
+  pointer-events: none;
+}
+
+.label-before {
+  left: 10px;
+  bottom: 10px;
+}
+
+.label-after {
+  right: 10px;
+  bottom: 10px;
+}
+
 
   /* Стилі для лайтбоксу */
   .lightbox {
@@ -150,3 +204,4 @@ const { before, after, translation } = Astro.props;
     padding: 10px;
   }
 </style>
+

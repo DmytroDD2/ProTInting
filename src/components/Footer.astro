@@ -14,12 +14,13 @@ const t = await import(`../translations/${lang}.json`).catch(() => ({}));
 
 <footer class="footer">
   <div class="inf">
-    <section class="contacts">
+    <section class="contacts">  
       <h3>{t.menu.contacts}</h3>
       <ul>
-        <li>123 Main Street, City</li>
-        <li>Phone: +1 (123) 456-7890</li>
-        <li>Email:2Y9uS@example.com</li>
+        <li>{t.contacts.vanue.country}</li>
+        <li>{t.contacts.vanue.city}</li>
+        <li>Phone: +420 725 923 395</li>
+        <li>Email: detailingcentrhk@gmail.com</li>
       </ul>
     </section>
 
@@ -36,18 +37,20 @@ const t = await import(`../translations/${lang}.json`).catch(() => ({}));
   </div>
 
 <div class="social-media">
-  <!-- <a href="">
-    <FacebookIcon class='icons' />
-  </a> -->
-  <a href="https://www.instagram.com/detailing_centr_hk?igsh=OGtjcmlrbjJvcDh2&utm_source=qr" >
+
+  <a
+   href="https://www.instagram.com/detailing_centr_hk?igsh=OGtjcmlrbjJvcDh2&utm_source=qr"
+   aria-label="Instagram"
+  >
     <InstagramIcon class='icons'/>
   </a>
-  <a href="https://www.tiktok.com/@auto.face?_t=ZN-8wQxEWNb17O&_r=1">
+  <a
+   href="https://www.tiktok.com/@auto.face?_t=ZN-8wQxEWNb17O&_r=1"
+   aria-label="TikTok"
+   >
     <TikTokIcon href="https://www.tiktok.com/@auto.face?_t=ZN-8wQxEWNb17O&_r=1" class='icons'/>
   </a>
-  <!-- <a href="">
-    <YouTubeIcon class='icons'/>
-  </a> -->
+
 </div>
 
  

@@ -9,6 +9,7 @@ import { generateStaticPaths } from '@/utils/i18n';
 import ImageTitle from "../../components/ImageTitle.astro";
 import { Image } from "astro:assets";
 import ImageCar from "@/assets/img/contact_car.png"
+import LeadForm from "@/components/LeadForm.astro";
 // export async function getStaticPaths() {
 //   return generateStaticPaths();
 // }
@@ -30,6 +31,7 @@ export async function getStaticPaths() {
 
   return generateStaticPaths(pageProps);
 }
+
 
 
 
@@ -62,14 +64,15 @@ console.log(translation.home);
       <section class="card class-bg ">
         <CallSvg class="icon"/>
         <h2>{translation.contacts.phone.title}</h2>
-        <p>+380 44 123 45 67</p>
+        <p>+420 725 923 395</p>
       </section>
       <section class="card class-bg ">
         <EnvelopSvg class="icon"/>
         <h2>{translation.contacts.envelop.title}</h2>
-        <p>info@example.com</p>
+        <p>detailingcentrhk@gmail.com</p>
       </section>
     </div>
+    
     <section class="class-bg card-style flex flex-row justify-evenly mb-10">
       <div class="work-schedule">
         <div class="flex gap-2 items-center">
@@ -91,6 +94,7 @@ console.log(translation.home);
       </div>
     
     </section>
+    <LeadForm translation={translation.form} lang={lang}/>
   </div>
 </MainLayout>
 

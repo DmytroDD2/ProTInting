@@ -1,13 +1,27 @@
 ---
 const currentThemes = Astro.props.currentTheme || "light";
+const { translation } = Astro.props;
 ---
 
-<label class="theme-switch" transition:persist>
+<label class="theme-switch" transition:persist tabindex="0" >
   <input type="checkbox" id="themeToggle" />
   <span class="slider"></span>
+  <span class="visually-hidden">{translation.change_theme}</span>
 </label>
 
+
 <style>
+  .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
   /* .sun { fill: black; }
   .moon { fill: transparent; }
 
@@ -62,6 +76,7 @@ const currentThemes = Astro.props.currentTheme || "light";
 </style>
 
 <script is:inline>
+  
   const getPreferredTheme = () => {
     const stored = localStorage.getItem("theme");
     if (stored === "light" || stored === "dark") return stored;
@@ -86,6 +101,17 @@ const currentThemes = Astro.props.currentTheme || "light";
   themeToggle?.addEventListener("change", () => {
     const newTheme = themeToggle.checked ? "dark" : "light";
     applyTheme(newTheme);
+  });
+
+  const themeSwitch = document.querySelector(".theme-switch");
+  
+  themeSwitch?.addEventListener("keydown", (e) => {
+    console.log("sdfasdfasdf")
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault(); // запобігає прокрутці на Space
+      themeToggle.checked = !themeToggle.checked;
+      themeToggle.dispatchEvent(new Event("change", { bubbles: true }));
+    }
   });
 
   // Reapply after Astro navigation

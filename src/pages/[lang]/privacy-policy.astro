@@ -1,0 +1,62 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { generateStaticPaths } from '@/utils/i18n';
+
+// src/pages/privacy-policy/[...lang].astro
+
+// Генерація статичних шляхів для кожної мови
+export const SUPPORTED_LOCALES = ['uk', 'cs'] as const;
+type Locale = typeof SUPPORTED_LOCALES[number];
+
+
+
+export async function getStaticPaths() {
+    const pageProps = {
+        ukTitle: 'Політика конфіденційності',
+        csTitle: 'Zásady ochrany osobních údajů',
+        description: {
+            uk: 'Інформація про обробку персональних даних',
+            cs: 'Informace o zpracování osobních údajů'
+        },
+        canonicalUrl: {
+            uk: 'https://autotint.ua/privacy-policy',
+            cs: 'https://autotint.cz/privacy-policy'
+        }
+    };
+
+    return generateStaticPaths(pageProps);
+}
+
+const { lang } = Astro.params;
+const { title, description, canonicalUrl } = Astro.props;
+const content = await import(`../../translations/${lang}.json`);
+---
+
+<MainLayout
+  title={title} 
+  lang={lang}
+  description={description}
+  canonicalUrl={canonicalUrl}
+>
+  <article class="privacy-policy">
+    <h1>{title}</h1>
+    
+    {content.private_policy.map((section, index) => (
+      <section key={index}>
+        <h2>{section.title}</h2>
+        <p>{section.text}</p>
+      </section>
+    ))}
+  </article>
+</MainLayout>
+
+<style>
+  .privacy-policy {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .privacy-policy section {
+    margin-bottom: 2rem;
+  }
+</style>

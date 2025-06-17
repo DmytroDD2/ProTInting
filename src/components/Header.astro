@@ -13,30 +13,44 @@ const { lang = 'uk', currentTheme } = Astro.props;
 const t = await import(`../translations/${lang}.json`).catch(() => ({}));
 
 const navLinks = [
-  { href: `/${lang}/`, label: t.menu?.home || 'Головна', image: BoxSvg },
-  { href: `/${lang}/services`, label: t.menu?.services || 'Послуги', image: HomeSvg },
+  { href: `/${lang}/home`, label: t.menu?.home, image: BoxSvg },
+  { href: `/${lang}/services`, label: t.menu?.services, image: HomeSvg },
   // { href: `/${lang}/about`, label: t.menu?.about || 'Про нас', image: ContactsSvg },
-  { href: `/${lang}/works`, label: t.menu?.works || 'Роботи', image: WorksSvg },
-  { href: `/${lang}/contacts`, label: t.menu?.contacts || 'Контакти', image: ContactsSvg },
+  { href: `/${lang}/works`, label: t.menu?.works , image: WorksSvg },
+  { href: `/${lang}/kontakty`, label: t.menu?.contacts, image: ContactsSvg },
 ];
 ---
 
 <header class="header">
-  
-  
-
-  <input type="checkbox" id="mobile-menu" class="mobile-menu-toggle" />
-  <label for="mobile-menu" class="hamburger">
+  <input
+    type="checkbox"
+    id="mobile-menu"
+    class="mobile-menu-toggle"
+    aria-label={t.accessibility?.menu_toggle}
+  />
+  <label
+    for="mobile-menu"
+    class="hamburger"
+    tabindex="0"
+    role="button"
+    aria-label={t.accessibility?.menu_toggle}
+    aria-pressed="false"
+  >
     <span></span>
     <span></span>
     <span></span>
   </label>
- <a href="/" class="logo">AutoTint</a>
-  <nav class="nav">
+
+
+  <a href="/" class="logo" aria-label={t.accessibility?.logo}>
+    AutoTint
+  </a>
+
+
+  <nav class="nav" aria-label={t.accessibility?.navigation}>
     <ul class="nav-list">
       {navLinks.map((link) => (
-        <li >
-          {/* <link.image class="nav-link-icon"/> */}
+        <li>
           <Link
             href={link.href}
             path={currentPath}
@@ -52,19 +66,29 @@ const navLinks = [
   </nav>
 
 
-  <input type="checkbox" id="mobile-actions" class="mobile-actions-toggle" />
-  <label for="mobile-actions" class="mobile-actions-button">
+  <input
+    type="checkbox"
+    id="mobile-actions"
+    class="mobile-actions-toggle"
+  />
+  <label
+    for="mobile-actions"
+    class="mobile-actions-button"
+    tabindex="0"
+    role="button"
+    aria-label={t.accessibility?.settings_toggle}
+    aria-pressed="false"
+  >
     <GearSvg class="gear-icon" />
   </label>
 
+
   <div class="actions">
     <LanguageSwitcher currentLang={lang} compact />
-    <ThemeToggle  />
+    <ThemeToggle translation={t.works}/>
   </div>
-
-
-  
 </header>
+
 
 
 <script is:inline >
@@ -79,7 +103,7 @@ const navLinks = [
     let justOpenedActions = false;
     let justOpenedMenu = false;
 
-    // Відкриття меню (гамбургера)
+   
     hamburger.addEventListener('click', () => {
       justOpenedMenu = true;
       setTimeout(() => {
@@ -87,12 +111,27 @@ const navLinks = [
       }, 100);
     });
 
-    // Відкриття дій (шестерні)
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        hamburger.click();
+ 
+      }
+    });
+
+
     actionsButton.addEventListener('click', () => {
       justOpenedActions = true;
       setTimeout(() => {
         justOpenedActions = false;
       }, 100);
+    });
+
+    actionsButton.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        actionsButton.click();
+      }
     });
 
     document.addEventListener('click', (e) => {
@@ -126,7 +165,10 @@ const navLinks = [
     --accent-color: #4f46e5;
     --mobile-breakpoint: 768px;
   } */
-
+  .mobile-menu-toggle:focus-visible + .hamburger {
+  outline: 2px solid blue;
+  outline-offset: 4px;
+} 
   .header {
   
     display: flex;
@@ -263,6 +305,7 @@ const navLinks = [
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin-top: 0;
   
       
     }
@@ -307,7 +350,7 @@ const navLinks = [
     .mobile-actions-button {
       display: block;
     }
-
+    
 
   }
 </style>

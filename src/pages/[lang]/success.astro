@@ -1,0 +1,141 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { generateStaticPaths } from '@/utils/i18n';
+import CheckSvg from "@/assets/green_quality.svg";
+
+
+export async function getStaticPaths() {
+  const pageProps = {
+    uaTitle: 'Контакти',
+    enTitle: 'Contacts',
+    description: {
+      uk: 'Зв’яжіться з нами для отримання додаткової інформації',
+      cs: 'Kontaktujte nás pro více informací'
+    },
+    canonicalUrl: {
+      uk: 'https://autotint.ua/kontakty',
+      cs: 'https://autotint.cz/kontakty'
+    }
+  };
+  return generateStaticPaths(pageProps);
+}
+
+const { lang } = Astro.params;
+const title = Astro.props.title || 'Astro Basics'; //change later
+const translation = await import(`../../translations/${lang}.json`);
+---
+
+
+
+  <MainLayout lang={lang} title={title}>
+      <section>
+        <!-- <div class="icon-success">✓</div> -->
+         <CheckSvg class="icon-success" aria-hidden="true"/>
+        <h1>{translation.form.success_title}</h1>
+        <p style="font-weight: 500;">{translation.form.success_subtitle}</p>
+        <p style="color: #888;">{translation.form.success_message}</p>
+        <div class="work-hours">
+          <strong>{translation.work_schedule.title}:</strong>
+          <table>
+            <tr>
+              <td>{translation.work_schedule.range}</td>
+              <!-- <td>10:00 - 16:00</td> -->
+            </tr>
+            <tr>
+              <td>{translation.work_schedule.end_days}</td>
+              <td>10:00 - 16:00</td>
+            </tr>
+            <tr>
+              <td>{translation.work_schedule.day_off}</td>
+              <td>{translation.work_schedule.day_off_text}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="contact-info">
+          <div>📞 +420 (72) 592-33-95</div>
+          <div>✉️ detailingcentrhk@gmail.com</div>
+        </div>
+        <a href={`/${lang}/home`} class="btn-home">
+          ← {translation.form.back_to_home}
+        </a>
+      </section>
+  </MainLayout>
+
+<style>
+    section {
+        font-family: system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        color: var(--color-text-nav);
+        text-align: center;
+        background-color: var(--color-bg-nav);
+    }
+
+    .icon-success {
+        width: 6rem;
+        height: 6rem;
+       
+   
+/
+        border-radius: 50%;
+        margin-bottom: 1rem;
+        margin-right: auto;
+        margin-left: auto;
+        fill: #2ECC71;
+        padding: 1rem;
+    }
+
+    .work-hours {
+        background: var(--color-bg-nav);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        max-width: 480px;
+        width: 100%;
+        box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        color: var(--color-text-nav);
+    }
+
+    .btn-home {
+        background: #1034A6;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-home:hover {
+        background-color: #0d287c;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 1rem;
+        border-collapse: collapse;
+    }
+
+    td {
+        padding: 0.5rem;
+        text-align: left;
+        color: var(--color-text-nav);
+    }
+
+    @media (max-width: 480px) {
+        .work-hours {
+            padding: 1rem;
+        }
+    }
+</style>

@@ -29,21 +29,21 @@ export const generateStaticPaths = (pageProps: PageProps = {}) => {
 
 function getLocalizedTitle(lang: Locale, props: PageProps): string {
   return lang === 'uk' 
-    ? props.uaTitle || 'Тонування вікон' 
-    : props.enTitle || 'Window Tinting';
+    ? props.uaTitle || 'Тонування ' 
+    : props.enTitle || 'Tinting';
 }
 
 function getDefaultDescription(lang: Locale): string {
   return lang === 'uk'
     ? 'Професійне тонування вікон. Якісні матеріали.'
-    : 'Professional window tinting. High-quality materials.';
+    : 'Profesionální tónování oken. Vysoce kvalitní materiály.';
 }
 
 function getDefaultCanonical(lang: Locale): string {
   const baseUrl = 'https://autotint.com';
   return lang === 'uk' 
     ? `${baseUrl}/uk` 
-    : `${baseUrl}/en`;
+    : `${baseUrl}/cs`;
 }
 
 

@@ -6,6 +6,10 @@ import { getDisribeList } from '../../utils/disribeList';
 import { Image } from 'astro:assets';
 import ImageTitle from "@/components/ImageTitle.astro";
 import CarImage from "@/assets/car_2.png";
+// import CarImage from "@/assets/img/seo.png";
+
+ 
+import TitleVideo from "../../assets/videos/tesla.mp4"
 // export async function getStaticPaths() {
 //   return generateStaticPaths();
 // }
@@ -50,9 +54,11 @@ const disribeList = await getDisribeList(translation)
     src={CarTitle} 
     alt={translation.car_image_alt || 'Car'} 
   /> -->
-
+ 
   <section class="desribe-list py-8 px-4 md:px-8">
-    <h2 class="text-2xl font-bold mb-6 text-center">{translation.home.title}</h2>
+    <h2 class="text-2xl font-bold mb-6 text-center">
+      {translation.home.title}
+    </h2>
     <ul class="inf-elements">
       {disribeList.map(({ Svg, title, description }) => (
         <li class="element">
@@ -65,7 +71,15 @@ const disribeList = await getDisribeList(translation)
       ))}
     </ul>
   </section>
-
+  <video
+      src={TitleVideo}
+      loop
+      muted
+      playsinline
+      aria-label={translation.accessibility.video_result}
+      class="gallery-video"
+    
+    />
 
   <!-- <section class="options  py-8 px-4 md:px-8">
     <h2 class="text-2xl font-bold mb-8 text-center">{translation.options_title}</h2>
@@ -87,8 +101,48 @@ const disribeList = await getDisribeList(translation)
   </section> -->
 </MainLayout>
 
-<style>
+<script>
+  function setupVideoAutoplay() {
+    const videos = document.querySelectorAll(".gallery-video");
 
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target;
+
+        // Встановлюємо гучність один раз
+        if (!video.dataset.volumeSet) {
+          video.volume = 0.1; // Гучність від 0 до 1
+          video.dataset.volumeSet = "true";
+        }
+
+        if (entry.isIntersecting) {
+          video.play().catch(e => console.log("Error playing video", e));
+        } else {
+          video.pause();
+        }
+      });
+    }, {
+      threshold: 0.7 
+    });
+
+    videos.forEach(video => {
+      observer.observe(video);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupVideoAutoplay);
+  document.addEventListener("astro:after-swap", setupVideoAutoplay);
+</script>
+
+<style>
+  video {
+    max-width: 90%;
+    width: 100%;
+    margin: auto;
+    height: 40rem;
+    /* rotate: -90deg; */
+    display: block;
+  }
   .inf-elements {
     display: flex;
     width: 100%;

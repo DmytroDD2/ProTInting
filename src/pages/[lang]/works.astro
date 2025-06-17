@@ -21,8 +21,11 @@ import ImgCarAfter6 from "@/assets/works/6_after.jpg"
 import ImgCarBefore7 from "@/assets/works/7_before.jpg"
 import ImgCarAfter7 from "@/assets/works/7_after.jpg"
 
-import VideoProcess from "../../assets/videos/process1.mp4"
-import { Image } from "astro:assets";
+import ImgCarBefore8 from "@/assets/works/8_before.png"
+import ImgCarAfter8 from "@/assets/works/8_after.png"
+
+import VideoTiling2 from "@/assets/videos/tiling2.mp4"
+import VideoTiling from "@/assets/videos/tiling.mp4"
 
 
 export async function getStaticPaths() {
@@ -56,12 +59,16 @@ const works = [
   { before: ImgCarBefore5, after: ImgCarAfter5 },
   { before: ImgCarBefore6, after: ImgCarAfter6 },
   { before: ImgCarBefore7, after: ImgCarAfter7 },
+
+  { before: ImgCarBefore8, after: ImgCarAfter8 },
+  
  
 ];
 
 const videos = [
-  VideoProcess,
-  VideoProcess,
+
+  // VideoTiling,
+  VideoTiling2
  
 ];
 
@@ -70,9 +77,9 @@ const videos = [
 
 <MainLayout lang={lang} title={title}>
 
-  <div class="gallery">
-    <!-- <img src={"../../assets/works/1.png"} alt="Before" /> -->
-      <!-- Галерея фото -->
+  <div class="gallery" aria-label={translation.accessibility.gallery}>
+    
+      <!-- Photos -->
       <div class="gallery-grid">
         {
           works.map((work) => (
@@ -84,7 +91,7 @@ const videos = [
           ))
         }
       </div>
-      <!-- Блок з відео -->
+      <!-- Video -->
       <div class="video-grid">
         {
           videos.map((video) => (
@@ -93,17 +100,14 @@ const videos = [
               loop
               muted
               playsinline
-              
+              aria-label={translation.accessibility.videobefore_after}
               class="gallery-video"
             
             ></video>
           ))
         }
       </div>
-      <!-- Кнопка CTA -->
-      <!-- <div class="cta-container">
-        <a href="/zapis" class="cta-button">Зробити так само</a>
-      </div> -->
+   
   </div>
 </MainLayout>
 <script>

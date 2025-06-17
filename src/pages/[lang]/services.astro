@@ -41,8 +41,12 @@ const translation = await import(`../../translations/${lang}.json`);
     urlImage={CarImage}
   />
  
-  <section class="service-section">
-    <h2>{translation.services.services.title}</h2>
+  <section 
+   class="service-section"
+   aria-labelledby="services-heading"
+  >
+    <h2 id="services-heading" >
+      {translation.services.services.title}</h2>
     <div class="services-container">
       
       <div class="service-card">
@@ -53,7 +57,7 @@ const translation = await import(`../../translations/${lang}.json`);
            <ul>
             {(translation.services.services.type.tining.list as string[]).map((item: string) => (
               <li>
-                <CheckSvg />
+                <CheckSvg aria-hidden="true"/>
                 {item}
               </li>
             ))}
@@ -68,7 +72,7 @@ const translation = await import(`../../translations/${lang}.json`);
            <ul>
             {(translation.services.services.type.polishing.list as string[]).map((item: string) => (
               <li>
-                <CheckSvg />
+                <CheckSvg aria-hidden="true"/>
                 {item}
               </li>
             ))}
@@ -86,15 +90,15 @@ const translation = await import(`../../translations/${lang}.json`);
           <h3>{translation.services.ditail_polishing.whom.title}</h3>
            <ul>
             <li>
-              <CarISvg class="icon"/>
+              <CarISvg class="icon" aria-hidden="true"/>
               {translation.services.ditail_polishing.whom.list[0]}
             </li>
             <li>
-              <PaintSvg class="icon"/>
+              <PaintSvg class="icon" aria-hidden="true"/>
               {translation.services.ditail_polishing.whom.list[1]}
             </li>
             <li>
-              <BulbSvg class="icon"/>
+              <BulbSvg class="icon" aria-hidden="true"/>
               {translation.services.ditail_polishing.whom.list[2]}
             </li>
           </ul>
@@ -104,7 +108,7 @@ const translation = await import(`../../translations/${lang}.json`);
       <div class="service-card">
         <div class="service-content">
           <h3>{translation.services.ditail_polishing.process.title}</h3>
-           <ul>
+           <ul aria-label={translation.accessibility.steps}>
             {(translation.services.ditail_polishing.process.list as string[]).map((item: string, index) => (
               <li>
                 <span
@@ -125,7 +129,7 @@ const translation = await import(`../../translations/${lang}.json`);
            <ul>
             {(translation.services.ditail_polishing.result.list as string[]).map((item: string) => (
               <li>
-                <QualitySvg class=" h-6 w-5 fill-green-400" />
+                <QualitySvg class=" h-6 w-5 fill-green-400" aria-label={translation.accessibility.quality}/>
                 {item}
               </li>
             ))}

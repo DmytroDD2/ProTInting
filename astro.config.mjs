@@ -1,27 +1,24 @@
-// @ts-check
+
 import { defineConfig } from 'astro/config';
 import tailwindcss from "@tailwindcss/vite";
-// https://astro.build/config
-// export default defineConfig({});
-import path from 'path';
+
+
 export default defineConfig({
   server: {  //delete -afer
     host: true,
-    allowedHosts: ['.serveo.net'], // або точну адресу
+    // allowedHosts: ['.loca.lt'],
+
+    allowedHosts: ['.ngrok-free.app'],
+    // allowedHosts: ['.serveo.net'],
   },  
   vite: {
     plugins: [tailwindcss()],
-    // resolve: {
-    //   alias: {
-    //     '@': path.resolve('./src'),
-    //   },
-    // },
+
   },
   i18n: {
     locales: ["uk", "cs"],
-    defaultLocale: "uk",
+    defaultLocale: "cs",
     
-    // prefixDefaultLocale: true,  // /uk/..., /cs/...
   },
 
 })

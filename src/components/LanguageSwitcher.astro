@@ -6,8 +6,8 @@ const currentPath = Astro.url.pathname;
 ---
 
 <div class="language-switcher" >
-  <div class="dropdown">
-    <button class="dropdown-toggle" aria-label="Change language" >
+  <div class="dropdown" >
+    <button class="dropdown-toggle" aria-label="Change language" tabindex="0">
       {currentLang === 'uk' ? '🇺🇦' : '🇨🇿'}
       <span class="chevron">▼</span>
     </button>
@@ -26,6 +26,37 @@ const currentPath = Astro.url.pathname;
     </ul>
   </div>
 </div>
+
+<script is:inline>
+function initDropdown() {
+  const dropdown = document.querySelector(".dropdown");
+  if (!dropdown) return;
+
+  const dropdownMenu = dropdown.querySelector(".dropdown-menu");
+  const toggleButton = dropdown.querySelector(".dropdown-toggle");
+
+  dropdown.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      dropdownMenu.classList.toggle("open");
+      const isOpen = dropdownMenu.classList.contains("open");
+      toggleButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdownMenu.classList.remove("open");
+      toggleButton.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
+// Ініціалізація при першому завантаженні
+initDropdown();
+
+// Повторна ініціалізація після навігації
+document.addEventListener("astro:after-swap", initDropdown);
+</script>
 
 <style>
   .language-switcher {
@@ -118,4 +149,17 @@ const currentPath = Astro.url.pathname;
   .dark .dropdown-menu .active {
     background: rgba(255, 255, 255, 0.1);
   }
+  .dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.2s;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 </style>

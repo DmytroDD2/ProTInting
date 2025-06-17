@@ -3,12 +3,12 @@
     "home": "Domů",
     "about": "O nás",
     "works": "Prace",
-    "contacts": "Kontakt",
+    "contacts": "Kontakty",
     "services": "Služby"
   },
   "home": {
     "welcome": "Vítejte!",
-    "description": "Prémiové auto fólie ve Lvově."
+    "description": "Prémiové tónování aut v Hradci Králové."
   },
   "about": {
     "title": "O nás",
@@ -94,7 +94,8 @@
     "vanue": {
       "title": "Naše adresa",
       "city": "Hradec Králové",
-      "street": "ul. Puškinská, 1"
+      "country": "Česká republika",
+      "street": ""
     },
 
     "phone": {
@@ -173,11 +174,77 @@
   "works": {
     "before": "Pred",
     "after": "Po",
+    "window_before": "Okno před tónováním",
+    "window_after": "Okno po tónování",
+    "full_image": "Obrázek v plné velikosti",
+    "change_theme": "Změnit téma",
     "change_image": {
       "after": "Klikněte pro zobrazení \"Před\" ",
       "before": "Klikněte pro zobrazení \"Po\" "
     }
+  },
+
+  "accessibility": {
+    "skip_to_content": "Přeskočit na hlavní obsah",
+    "menu_toggle": "Otevřít nebo zavřít hlavní menu",
+    "settings_toggle": "Otevřít nebo zavřít nastavení",
+    "logo": "Přejít na hlavní stránku AutoTint",
+    "navigation": "Hlavní navigace webu"
+  },
+
+  "form": {
+    "title": "Kontaktujte nás",
+    "subtitle": "Zanechte své kontaktní údaje a my se vám co nejdříve ozveme",
+    "fields": {
+       "name": {
+      "placeholder": "Vaše jméno",
+      "icon": "👤",
+      "required": true
+    },
+      "phone": {
+        "placeholder": "Vaše telefonní číslo",
+        "icon": "📞",
+        "required": true
+      },
+      "email": {
+        "placeholder": "Váš e-mail",
+        "icon": "📧",
+        "required": true
+      }
+    },
+    "submit": "Odeslat žádost",
+    "terms": "Odesláním formuláře souhlasíte s našimi",
+    "terms_link": "Podmínkami používání",
+    "privacy_label": "Souhlasím s ",
+    "privacy_link": "Zásadami ochrany osobních údajů",
+    "success_title": "Děkujeme za vaši zprávu!",
+    "success_subtitle": "Obdrželi jsme váš požadavek",
+    "success_message": "Náš manažer vás bude co nejdříve kontaktovat.",
+    "back_to_home": "Zpět na hlavní stránku"
+
+  },
+
+  "private_policy": [
+  {
+    "title": "1. Sběr údajů",
+    "text": "Shromažďujeme pouze údaje, které zadáte prostřednictvím kontaktních formulářů: jméno, e-mail, telefon a zprávu."
+  },
+  {
+    "title": "2. Zpracování údajů",
+    "text": "Kontaktní formuláře jsou zpracovávány prostřednictvím externí služby, která splňuje bezpečnostní standardy (v době zveřejnění těchto zásad – Netlify Forms). Tato služba automaticky maže data po 30 dnech. Aktuální informace o podmínkách zpracování najdete na oficiálních stránkách poskytovatele."
+  
+  },
+  {
+    "title": "3. Vaše práva",
+    "text": "Můžete požádat o smazání svých údajů před uplynutím standardní doby uchování tím, že nás kontaktujete prostřednictvím kontaktního formuláře."
+  },
+  {
+    "title": "4. Ochrana údajů",
+    "text": "Všechny údaje jsou přenášeny přes šifrované spojení (HTTPS) a chráněny před neoprávněným přístupem."
   }
+]
 }
+
+
 
 

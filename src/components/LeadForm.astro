@@ -1,0 +1,273 @@
+---
+// form.astro
+
+
+const  { translation, lang} = Astro.props
+---
+
+
+<form 
+  name="contact"
+  method="POST"
+  data-netlify="true"
+  data-netlify-honeypot="bot-field" 
+  class="contact-form"
+>
+
+  <input type="hidden" name="form-name" value="contact" />
+  <input type="hidden" name="language" value={lang} />  
+  <input type="text" name="bot-field" style="display:none">  
+
+
+  <h2>{translation.title}</h2>
+  <p class="subtitle">{translation.subtitle}</p>
+  <label class="input-wrapper">
+    <span class="icon">{translation.fields.name.icon}</span>
+    <input 
+      type="text"
+      name="name"
+      required={translation.fields.name.required}
+      placeholder={translation.fields.name.placeholder}
+      autocomplete="name"
+       autocorrect="off"
+      spellcheck="false"
+    />
+  </label>
+  <label class="input-wrapper">
+    <span class="icon">{translation.fields.phone.icon}</span>
+    <input 
+      type="tel"
+      name="phone"
+      required={translation.fields.phone.required}
+      placeholder={translation.fields.phone.placeholder}
+      pattern="^\+380\s?\d{2}\s?\d{3}\s?\d{2}\s?\d{2}$"
+      autocorrect="off"
+      spellcheck="false"
+    />
+  </label>
+
+  <label class="input-wrapper">
+    <span class="icon">{translation.fields.email.icon}</span>
+    <input 
+      type="email"
+      name="email"
+      required={translation.fields.email.required}
+      placeholder={translation.fields.email.placeholder}
+      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+      autocomplete="email"  
+      autocorrect="off"
+      spellcheck="false"
+    />
+  </label>
+
+ 
+  <label class="checkbox-container">
+    <input 
+      type="checkbox" 
+      name="privacy_agreement" 
+      required
+      aria-label="Погодження з політикою конфіденційності"  
+      autocorrect="off"
+      spellcheck="false"
+    >
+    <span class="checkmark"></span>
+    {translation.privacy_label} 
+    <a 
+      href={`/${lang}/privacy-policy`} 
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-describedby="privacy-notice"
+    >
+      {translation.privacy_link}
+    </a>
+  </label>
+
+
+  <button type="submit" class="submit-btn">
+    {translation.submit}
+  </button>
+
+  <p class="terms" hidden={!translation.terms}>  
+    {translation.terms} 
+    <a href={`/${lang}/privacy-policy`}>{translation.terms_link}</a>
+  </p>
+</form>
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+  const phoneInput = document.querySelector('input[name="phone"]');
+  
+  phoneInput?.addEventListener('input', (e) => {
+
+    let value = e.target.value.replace(/[^\d+]/g, '');
+    
+
+    if (!value.startsWith('+')) {
+      value = '+' + value.replace(/^\+/, '');
+    }
+    
+
+    value = value.replace(/^(\+)(\d{1,3})(\d{0,3})(\d{0,3})(\d{0,4}).*$/, 
+      (_, p1, p2, p3, p4, p5) => {
+        let result = p1 + p2;
+        if (p3) result += ' ' + p3;
+        if (p4) result += ' ' + p4;
+        if (p5) result += ' ' + p5;
+        return result;
+      }
+    );
+    
+    e.target.value = value;
+  });
+});
+document.querySelector('form').addEventListener('submit', (e) => {
+  const nameInput = document.querySelector('input[name="name"]');
+  
+  if (!/^[\p{L}\s'-]{2,50}$/u.test(nameInput.value)) {
+    e.preventDefault();
+    alert("Name contains invalid characters");
+    nameInput.focus();
+  }
+});
+</script>
+
+<style>
+.contact-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  margin-top: 0;
+  padding: 2rem;
+  background: linear-gradient(to bottom right, #3a80c1, #4cb4e7);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  /* color: #fff; */
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.contact-form h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-form .subtitle {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 0 0.75rem;
+}
+
+.input-wrapper .icon {
+  font-size: 1.2rem;
+  color: #333;
+  margin-right: 0.5rem;
+}
+
+.input-wrapper input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+  background-color: #0a2640;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #083351;
+}
+
+.submit-btn:active {
+  background-color: #0a2640;
+  transform: translateY(2px);
+}
+
+.terms {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.terms a {
+  color: white;
+  text-decoration: underline;
+}
+
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .checkbox-container input:checked ~ .checkmark {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  /* Посилання в чекбоксі */
+  .checkbox-container a {
+    color: #fff;
+    text-decoration: underline;
+    margin-left: 4px;
+  }
+</style>
+
+
