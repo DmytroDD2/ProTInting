@@ -2,8 +2,8 @@ export const SUPPORTED_LOCALES = ['uk', 'cs'] as const;
 type Locale = typeof SUPPORTED_LOCALES[number];
 
 interface PageProps {
-  uaTitle?: string;
-  enTitle?: string;
+  ukTitle?: string;
+  csTitle?: string;
   description?: Record<Locale, string>;
   canonicalUrl?: Record<Locale, string>;
 
@@ -29,8 +29,8 @@ export const generateStaticPaths = (pageProps: PageProps = {}) => {
 
 function getLocalizedTitle(lang: Locale, props: PageProps): string {
   return lang === 'uk' 
-    ? props.uaTitle || 'Тонування ' 
-    : props.enTitle || 'Tinting';
+    ? props.ukTitle || 'Тонування ' 
+    : props.csTitle || 'Tinting';
 }
 
 function getDefaultDescription(lang: Locale): string {
@@ -41,7 +41,7 @@ function getDefaultDescription(lang: Locale): string {
 
 function getDefaultCanonical(lang: Locale): string {
   const baseUrl = 'https://autotint.com';
-  return lang === 'uk' 
+  return lang === 'uk'
     ? `${baseUrl}/uk` 
     : `${baseUrl}/cs`;
 }

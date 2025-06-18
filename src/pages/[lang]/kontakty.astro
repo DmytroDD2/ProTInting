@@ -17,12 +17,12 @@ import LeadForm from "@/components/LeadForm.astro";
 
 export async function getStaticPaths() {
   const pageProps = {
-    uaTitle: 'Контакти',
-    enTitle: 'Contacts',
+    ukTitle: 'Контакти DetailingCenter HK | Тонування у Градець-Кралове',
+    csTitle: 'Kontakt DetailingCenter HK | Tónování v Hradci Králové',
     description: {
-      uk: 'Зв’яжіться з нами для отримання додаткової інформації',
-      cs: 'Kontaktujte nás pro více informací'
-    },
+      uk: 'Зв’яжіться з нами для запису на тонування вікон або інші послуги у Градець-Кралове. Телефон.',
+      cs: 'Kontaktujte nás pro tónování skel nebo další služby. Telefon v Hradci Králové.'
+  },
     canonicalUrl: {
       uk: 'https://autotint.ua/kontakty',
       cs: 'https://autotint.cz/kontakty'
@@ -39,11 +39,12 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params;
 const title = Astro.props.title || 'Astro Basics'; //change later
+const description = Astro.props.description 
 const translation = await import(`../../translations/${lang}.json`);
 console.log(translation.home);
 ---
 
-<MainLayout lang={lang} title={title} >
+<MainLayout lang={lang} title={title} description={description?.[lang]} >
   <div class="flex flex-col gap-15">
     <ImageTitle
      translation={translation}

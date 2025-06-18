@@ -30,12 +30,12 @@ import VideoTiling from "@/assets/videos/tiling.mp4"
 
 export async function getStaticPaths() {
   const pageProps = {
-    uaTitle: 'Наші роботи',
-    enTitle: 'Our Works',
+    ukTitle: 'Наші роботи з тонування та полірування авто | DetailingCenter HK',
+    csTitle: 'Naše práce na tónování a leštění aut | DetailingCenter HK',
     description: {
-      uk: 'Галерея виконаних робіт з тонування та захисту скла',
-      cs: 'Galerie provedených prací tónování a ochrany skel'
-    },
+      uk: 'Ознайомтесь з прикладами наших робіт: тонування автостекол, полірування кузова та інші послуги в Градець-Кралове.',
+      cs: 'Podívejte se na naše ukázky prací – tónování autoskel, leštění karoserie a další služby v Hradci Králové.'
+  },
     canonicalUrl: {
       uk: 'https://autotint.ua/works',
       cs: 'https://autotint.cz/works'
@@ -46,7 +46,8 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
-const title = Astro.props.title || 'Astro Basics'; //change later
+const description = Astro.props.description 
+const title = Astro.props.title || 'Astro Basics'; 
 
 const translation = await import(`../../translations/${lang}.json`);
 
@@ -75,7 +76,7 @@ const videos = [
 
 ---
 
-<MainLayout lang={lang} title={title}>
+<MainLayout lang={lang} title={title} description={description?.[lang]}>
 
   <div class="gallery" aria-label={translation.accessibility.gallery}>
     

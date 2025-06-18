@@ -17,11 +17,11 @@ import TitleVideo from "../../assets/videos/tesla.mp4"
 
 export async function getStaticPaths() {
   const pageProps = {
-    uaTitle: 'Послуги тонування',
-    enTitle: 'Tinting Services',
+    ukTitle: 'Тонування авто вікон Градець Кралове | DetailingCenter HK',
+    csTitle: 'Tónování autoskel v Hradci Králové | DetailingCenter HK' ,
     description: {
-      uk: 'Професійні послуги тонування вікон',
-      cs: 'Profesionální služby tónování oken'
+      uk: 'Професійне затемнення та тонування вікон автомобіля у місті Градець-Кралове.',
+      cs: 'Profesionální zatemnění a tónování okna aut v městě Gradec-Kralove.'
     }
   };
   
@@ -30,6 +30,7 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params;
 const title = Astro.props.title || 'Astro Basics';
+const description = Astro.props.description || 'Astro Basics';
 const translation = await import(`../../translations/${lang}.json`);
 
 type Option = {
@@ -43,7 +44,7 @@ type Option = {
 const disribeList = await getDisribeList(translation)
 ---
 
-<MainLayout lang={lang} title={title}>
+<MainLayout lang={lang} title={title} description={description?.[lang]}>
   <ImageTitle
     title={translation.aboutService.title}
     discription={translation.aboutService.description}

@@ -18,8 +18,24 @@ const { href, path, icon } = Astro.props;
       <slot />
     </a>
 </li>
+ <!-- this maybe not need -->
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const links = document.querySelectorAll('.nav-link');
+    const currentPath = window.location.pathname;
 
+    links.forEach(link => {
+      const href = link.getAttribute('data-href');
+      if (href === currentPath) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
 
+    // ... твій інший код для меню
+  });
+</script>
 
 
 

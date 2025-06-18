@@ -13,12 +13,12 @@ import CarImage from  "@/assets/services/car.png";
 
 export async function getStaticPaths() {
   const pageProps = {
-    uaTitle: 'Послуги',
-    enTitle: 'Services',
+    ukTitle: 'Послуги автодетейлінгу та тонування | DetailingCenter HK',
+    csTitle: 'Služby tónování a autokosmetiky | DetailingCenter HK',
     description: {
-      uk: 'Послуги з тонування, полірування, полірування фар та захисту скла для авто',
-      cs: 'Služby tónování, leštění, leštění světlometů a ochrany skel pro automobily'
-    },
+        uk: 'Наші послуги включають тонування вікон, полірування кузова, захист фар та інші види автодетейлінгу у Градець-Кралове.',
+        cs: 'Nabízíme tónování autoskel, leštění karoserie, ochranu světel a další detailingové služby v Hradci Králové.'
+  },
     canonicalUrl: {
       uk: 'https://autotint.ua/services',
       cs: 'https://autotint.cz/services'
@@ -29,12 +29,13 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
-const title = Astro.props.title || 'Astro Basics'; //change later
+const title = Astro.props.title 
+const description = Astro.props.description 
 const translation = await import(`../../translations/${lang}.json`);
 
 ---
 
-<MainLayout lang={lang} title={title}>
+<MainLayout lang={lang} title={title} description={description?.[lang]}>
   <ImageTitle
     title={translation.services.main_title.title}
     discription={translation.services.main_title.discription}
