@@ -4,7 +4,16 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import {ClientRouter} from 'astro:transitions';
 import image from "@/assets/img/seo.png"
-const { lang, title, description, canonicalUrl } = Astro.props;
+
+const { 
+  lang = 'uk', 
+  title = 'Astro Basics', 
+  description = 'Default description of your website',
+  canonicalUrl = Astro.url.href,
+
+} = Astro.props;
+
+;
 ---
 
 <!doctype html>
@@ -14,30 +23,27 @@ const { lang, title, description, canonicalUrl } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator}>
-  
 
-  <title>{title || 'Astro Basics'}</title>
-  <meta name="description" content={description || 'Default description of your website'} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
 
-  <link rel="canonical" href={canonicalUrl || Astro.url.href} />
+  <!-- Canonical -->
+  <link rel="canonical" href={canonicalUrl} />
 
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalUrl || Astro.url.href} />
-  <meta property="og:title" content={title || 'Astro Basics'} />
-  <meta property="og:description" content={description || 'Default description of your website'} />
-  <meta property="og:image" content={image.src || '/default-social-image.jpg'}/>
-  <meta name="twitter:card" content="sumsummary_large_imagemary"/>
-   
-  
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={canonicalUrl} />
 
-
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content={canonicalUrl || Astro.url.href} />
-  <meta name="twitter:title" content={title || 'Astro Basics'} />
-  <meta name="twitter:description" content={description || 'Default description of your website'} />
-  <meta name="twitter:image" content={image.src || '/default-social-image.jpg'} />
-  
-  <meta property="og:url" content={new URL(canonicalUrl || Astro.url.href).origin} />
+  <meta name="twitter:url" content={canonicalUrl} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={image.src} />
+
   <ClientRouter />
 </head>
 

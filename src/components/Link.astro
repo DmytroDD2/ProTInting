@@ -1,41 +1,26 @@
 ---
+import { clsx } from 'clsx'
+const { href, path, icon } = Astro.props
 
-import {clsx} from 'clsx'
-const { href, path, icon } = Astro.props;
+
+const isActive = (currentPath, linkPath) => {
+ 
+  const normalize = p => new URL(p, 'http://example.com').pathname.replace(/\/+$/, '').toLowerCase()
+  return normalize(currentPath) === normalize(linkPath)
+}
 ---
 
- <li >
-    
-   
-    <a
-
-     href={href}
-      class={clsx("button",
-        path.endsWith(href)? 'active' 
-        : 'inactive') }
-    >
-      <icon.image class={clsx("icon", path.endsWith(href)? 'active' : 'inactive')}/>
-      <slot />
-    </a>
+<li>
+  <a
+    href={href}
+    class={clsx("button", isActive(path, href) && 'active')}
+  >
+    <icon.image class={clsx("icon", isActive(path, href) && 'active')} />
+    <slot />
+  </a>
 </li>
- <!-- this maybe not need -->
-<script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    const links = document.querySelectorAll('.nav-link');
-    const currentPath = window.location.pathname;
 
-    links.forEach(link => {
-      const href = link.getAttribute('data-href');
-      if (href === currentPath) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
-    });
 
-    // ... твій інший код для меню
-  });
-</script>
 
 
 
