@@ -40,7 +40,7 @@ function getDefaultDescription(lang: Locale): string {
 }
 
 function getDefaultCanonical(lang: Locale): string {
-  const baseUrl = 'https://autotint.com';
+  const baseUrl = 'https://gradec-kralove.netlify.app';
   return lang === 'uk'
     ? `${baseUrl}/uk` 
     : `${baseUrl}/cs`;
