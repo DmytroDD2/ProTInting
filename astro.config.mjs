@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 
 export default defineConfig({
+  site: 'https://gradec-kralove.netlify.app',
   server: {  //delete -afer
     host: true,
     // allowedHosts: ['.loca.lt'],
