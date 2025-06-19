@@ -41,9 +41,9 @@ export default defineConfig({
       },
       
       entryLimit: 50000,
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date(),
+      // changefreq: 'weekly',
+      // priority: 0.7,
+      // lastmod: new Date(),
     })
   ]
 })
