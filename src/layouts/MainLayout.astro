@@ -53,7 +53,12 @@ const fullCanonicalUrl = new URL(canonicalPath, Astro.site).toString();
 
 <meta property="og:image" content={new URL(seoImage.src, Astro.site).toString()} />
   <!-- <meta name="twitter:image" content={fullImageUrl} /> -->
-
+{import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION && (
+    <meta 
+      name="google-site-verification" 
+      content={import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION} 
+    />
+  )}
   <ClientRouter />
 </head>
 
