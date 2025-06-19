@@ -21,11 +21,26 @@ export default defineConfig({
 
   },
 
-  i18n: {
-    locales: ["uk", "cs"],
-    defaultLocale: "cs",
+  // i18n: {
+  //   locales: ["uk", "cs"],
+  //   defaultLocale: "cs",
     
-  },
+  // },
 
-  integrations: [sitemap()],
+  // integrations: [sitemap()],
+
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'uk',
+        locales: {
+          uk: 'uk',
+          cs: 'cs'
+        }
+      },
+      customPages: [
+        '/privacy-policy/'
+      ]
+    })
+  ]
 })
