@@ -50,7 +50,7 @@ const fullCanonicalUrl = new URL(canonicalPath, Astro.site).toString();
   <meta name="twitter:url" content={fullCanonicalUrl} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  ---
+
 <meta property="og:image" content={new URL(seoImage.src, Astro.site).toString()} />
   <!-- <meta name="twitter:image" content={fullImageUrl} /> -->
 

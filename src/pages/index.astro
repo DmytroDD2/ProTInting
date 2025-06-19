@@ -1,6 +1,26 @@
 ---
+const preferredLang = 'cs'
 ---
-<script is:inline>
+
+
+<!DOCTYPE html>
+<html lang={preferredLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content={`0; url=/${preferredLang}/home`} />
+    <link rel="canonical" href={`/${preferredLang}/home`} />
+  </head>
+  <body>
+    <p>Redirecting to <a href={`/${preferredLang}/home`}>/{preferredLang}/home</a>…</p>
+  </body>
+</html>
+
+
+
+
+
+<!-- <script is:inline>
   if (typeof window !== "undefined") {
     window.location.href = "/cs/home";
   }
@@ -8,4 +28,4 @@
 
 <noscript>
   <meta http-equiv="refresh" content="0; url=/cs/home" />
-</noscript>
+</noscript> -->
