@@ -21,29 +21,25 @@ export default defineConfig({
 
   },
 
-  // i18n: {
-  //   locales: ["uk", "cs"],
-  //   defaultLocale: "cs",
-    
-  // },
 
-  // integrations: [sitemap()],
 
   integrations: [
-
     sitemap({
       i18n: {
         defaultLocale: 'cs',
         locales: {
-          uk: 'uk',
-          cs: 'cs'
+          cs: 'cs',
+          uk: 'uk'
         }
       },
-      
-      entryLimit: 50000,
-      // changefreq: 'weekly',
-      // priority: 0.7,
-      // lastmod: new Date(),
+
+    
+      serialize: (item) => ({
+        url: item.url,
+        lastmod: (item.lastmod ? new Date(item.lastmod).toISOString().split('T')[0] : undefined), // лише дата
+        changefreq: 'weekly',
+        priority: item.url === 'https://gradec-kralove.netlify.app/cs/home/' || item.url === "https://gradec-kralove.netlify.app/uk/home/" ? 1.0 : 0.7
+      })
     })
   ]
 })
