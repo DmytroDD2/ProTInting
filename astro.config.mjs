@@ -30,17 +30,20 @@ export default defineConfig({
   // integrations: [sitemap()],
 
   integrations: [
+
     sitemap({
       i18n: {
-        defaultLocale: 'uk',
+        defaultLocale: 'cs',
         locales: {
           uk: 'uk',
           cs: 'cs'
         }
       },
-      customPages: [
-        '/privacy-policy/'
-      ]
+      
+      entryLimit: 50000,
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
     })
   ]
 })
