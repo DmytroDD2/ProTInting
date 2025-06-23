@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://gradec-kralove.netlify.app/sitemap-index.xml
+Sitemap: https://gradec-kralove.netlify.app/sitemap-0.xml

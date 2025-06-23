@@ -36,7 +36,7 @@ export default defineConfig({
     
       serialize: (item) => ({
         url: item.url,
-        lastmod: (item.lastmod ? new Date(item.lastmod).toISOString().split('T')[0] : undefined), // лише дата
+        lastmod: (item.lastmod ? new Date(item.lastmod).toISOString().split('T')[0] : undefined),
         changefreq: 'weekly',
         priority: item.url === 'https://gradec-kralove.netlify.app/cs/home/' || item.url === "https://gradec-kralove.netlify.app/uk/home/" ? 1.0 : 0.7
       })
