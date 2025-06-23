@@ -33,7 +33,9 @@ export default defineConfig({
         }
       },
 
-    
+      redirects: {
+      'http://localhost:4321': 'http://localhost:4321/cs/home',
+  },
       serialize: (item) => ({
         url: item.url,
         lastmod: (item.lastmod ? new Date(item.lastmod).toISOString().split('T')[0] : undefined),
