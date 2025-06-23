@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://gradec-kralove.netlify.app/sitemap-index.xml
-Sitemap: https://bepyan.me/sitemap.xml
+Sitemap: https://gradec-kralove.netlify.app/sitemap.xml
