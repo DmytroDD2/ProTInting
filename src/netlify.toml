@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/"
+  to = "/cs/home"
+  status = 308
+  force = true
