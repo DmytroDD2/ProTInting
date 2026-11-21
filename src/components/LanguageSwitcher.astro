@@ -7,7 +7,7 @@ const currentPath = Astro.url.pathname;
 
 <div class="language-switcher" >
   <div class="dropdown" >
-    <button class="dropdown-toggle" aria-label="Change language" tabindex="0">
+    <button class="dropdown-toggle" type="button" aria-label="Change language" aria-haspopup="true" aria-expanded="false">
       {currentLang === 'uk' ? '🇺🇦' : '🇨🇿'}
       <span class="chevron">▼</span>
     </button>
@@ -28,34 +28,39 @@ const currentPath = Astro.url.pathname;
 </div>
 
 <script is:inline>
-function initDropdown() {
-  const dropdown = document.querySelector(".dropdown");
-  if (!dropdown) return;
+  function initLanguageDropdown() {
+    // Drop the listeners of the previous run (this runs after every navigation)
+    window.__langAbort?.abort();
+    const ac = new AbortController();
+    window.__langAbort = ac;
+    const { signal } = ac;
 
-  const dropdownMenu = dropdown.querySelector(".dropdown-menu");
-  const toggleButton = dropdown.querySelector(".dropdown-toggle");
+    const dropdown = document.querySelector('.language-switcher .dropdown');
+    if (!dropdown) return;
+    const menu = dropdown.querySelector('.dropdown-menu');
+    const toggle = dropdown.querySelector('.dropdown-toggle');
 
-  dropdown.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      dropdownMenu.classList.toggle("open");
-      const isOpen = dropdownMenu.classList.contains("open");
-      toggleButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    }
-  });
+    const setOpen = (open) => {
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
 
-  document.addEventListener("click", (e) => {
-    if (!dropdown.contains(e.target)) {
-      dropdownMenu.classList.remove("open");
-      toggleButton.setAttribute("aria-expanded", "false");
-    }
-  });
-}
+    // Tap / click opens and closes the list (hover alone does not work on phones)
+    toggle.addEventListener('click', () => setOpen(!menu.classList.contains('open')), { signal });
 
-// Ініціалізація при першому завантаженні
-initDropdown();
+    dropdown.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    }, { signal });
 
-// Повторна ініціалізація після навігації
-document.addEventListener("astro:after-swap", initDropdown);
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) setOpen(false);
+    }, { signal });
+  }
+
+  if (!window.__langInit) {
+    window.__langInit = true;
+    document.addEventListener('astro:page-load', initLanguageDropdown);
+  }
 </script>
 
 <style>
@@ -79,9 +84,6 @@ document.addEventListener("astro:after-swap", initDropdown);
     background: rgba(0, 0, 0, 0.05);
   }
 
-  .dark .dropdown-toggle {
-    border-color: var(--color-border-dark);
-  }
 
   .dark .dropdown-toggle:hover {
     background: rgba(255, 255, 255, 0.05);
@@ -92,7 +94,7 @@ document.addEventListener("astro:after-swap", initDropdown);
     transition: transform 0.2s;
   }
 
-  .dropdown:hover .chevron {
+  .dropdown-toggle[aria-expanded="true"] .chevron {
     transform: rotate(180deg);
   }
 
@@ -100,10 +102,10 @@ document.addEventListener("astro:after-swap", initDropdown);
     position: absolute;
     top: 100%;
     right:0;
-    background: var(--color-bg);
+    background: var(--color-bg-nav);
     border: 1px solid var(--color-border);
-    border-radius: 4px;
-    padding: 0.5rem 0;
+    border-radius: 0.75rem;
+    padding: 0.4rem;
     margin-top: 0;
     min-width: 120px;
     list-style: none;
@@ -111,25 +113,15 @@ document.addEventListener("astro:after-swap", initDropdown);
     visibility: hidden;
     transition: all 0.2s;
     z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-    
+    box-shadow: var(--shadow-lg);
   }
 
-  .dark .dropdown-menu {
-    border-color: var(--color-border-dark);
-    background: var(--color-bg-dark);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  .dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-  }
 
   .dropdown-menu a {
     display: block;
-    padding: 0.5rem 1rem;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
     text-decoration: none;
     color: var(--color-text);
     transition: background 0.2s;
@@ -158,10 +150,43 @@ document.addEventListener("astro:after-swap", initDropdown);
   transition: all 0.2s;
 }
 
-.dropdown:hover .dropdown-menu,
 .dropdown-menu.open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+/* Mouse devices also open it on hover */
+@media (hover: hover) and (min-width: 769px) {
+  .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .dropdown:hover .chevron { transform: rotate(180deg); }
+}
+
+/* Phone: the list opens inline inside the settings panel instead of floating over it */
+@media (max-width: 768px) {
+  .dropdown-toggle {
+    justify-content: center;
+    border-radius: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 1.1rem;
+  }
+  .dropdown-menu {
+    display: none;
+    position: static;
+    margin-top: 0.5rem;
+    min-width: 0;
+    width: max-content;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    box-shadow: none;
+    background: transparent;
+    border-color: var(--color-border);
+  }
+  .dropdown-menu.open { display: block; }
 }
 </style>

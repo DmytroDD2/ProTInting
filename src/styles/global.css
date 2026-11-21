@@ -195,7 +195,8 @@ body::before, body::after {
   z-index: -1;
   width: 60vmax; height: 60vmax;
   border-radius: 50%;
-  filter: blur(90px);
+  /* No filter: blur() here - the radial gradient is already soft, and a blurred
+     animated full-screen layer made phones drop to ~25 fps. */
   pointer-events: none;
   will-change: transform;
 }
@@ -211,6 +212,11 @@ body::after {
 }
 @keyframes orb-a { to { transform: translate(25vmax, 18vmax) scale(1.15); } }
 @keyframes orb-b { to { transform: translate(-22vmax, -20vmax) scale(1.1); } }
+
+/* Phones/tablets: keep the glow but static (saves battery, keeps scrolling smooth) */
+@media (max-width: 1024px) {
+  body::before, body::after { animation: none; will-change: auto; }
+}
 
 /* Subtle grid texture */
 html::before {
