@@ -1,5 +1,6 @@
 ---
 import ImageTitle from "@components/ImageTitle.astro";
+import CtaBlock from "@/components/CtaBlock.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 import PallishigImage from "@/assets/services/pallishing.png";
 import TiningImage from "@/assets/services/tinting.png";
@@ -141,6 +142,7 @@ const translation = await import(`../../translations/${lang}.json`);
       
     </div>
   </section>
+  <CtaBlock lang={lang} translation={translation.cta} />
 </MainLayout>
 
 <style is:global>
@@ -155,8 +157,8 @@ const translation = await import(`../../translations/${lang}.json`);
   }
 
   .service-section h2 {
-    font-size: 1.8rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: 800;
     text-align: center;
     margin-bottom: 2rem;
     color: var(--primary-color);
@@ -174,9 +176,8 @@ const translation = await import(`../../translations/${lang}.json`);
     flex: 1;
     min-width: 300px;
     max-width: 400px;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    
     /* box-shadow: 0 7px 6px rgba(0, 0, 0, 0.1); */
     transition: transform 0.3s ease;
   }
@@ -223,7 +224,7 @@ const translation = await import(`../../translations/${lang}.json`);
   }
   
   .icon{
-    fill: #1034A6;
+    fill: var(--icon-color);
     width: 2rem;
     height: 2rem;
   }

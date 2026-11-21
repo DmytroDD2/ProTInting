@@ -212,7 +212,7 @@
         "required": true
       }
     },
-    "submit": "Odeslat žádost",
+    "submit": "Odeslat poptávku",
     "terms": "Odesláním formuláře souhlasíte s našimi",
     "terms_link": "Podmínkami používání",
     "privacy_label": "Souhlasím s ",
@@ -242,9 +242,11 @@
     "title": "4. Ochrana údajů",
     "text": "Všechny údaje jsou přenášeny přes šifrované spojení (HTTPS) a chráněny před neoprávněným přístupem."
   }
-]
+],
+  "cta": {
+    "button": "Kontaktujte nás",
+    "title": "Chcete, aby vaše auto vypadalo bezchybně?",
+    "text": "Napište nebo zavolejte – domluvíme termín a přesnou cenu.",
+    "call": "Zavolat"
+  }
 }
-
-
-
-

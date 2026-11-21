@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ContactCta from '../components/ContactCta.astro';
 import '../styles/global.css';
 import {ClientRouter} from 'astro:transitions';
 import seoImage from '../assets/img/seo.png';
@@ -11,6 +12,8 @@ const {
   description = 'Default description of your website',
   canonicalUrl = Astro.url.href
 } = Astro.props;
+
+const ctaT = (await import(`../translations/${lang}.json`).catch(() => ({ cta: undefined }))).cta;
 
 // Генеруємо абсолютні URL
 // const siteUrl = new URL(Astro.site || 'https://gradec-kralove.netlify.app');
@@ -75,8 +78,76 @@ const fullCanonicalUrl = new URL(canonicalPath, Astro.site).toString();
   <main>
     <slot />
   </main>
+  <ContactCta lang={Astro.props.lang} translation={ctaT} />
   <Footer lang={Astro.props.lang} />
   
+<script>
+  let videoObserver: IntersectionObserver | undefined;
+
+  function setupVideos() {
+    videoObserver?.disconnect();
+    videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll<HTMLVideoElement>('.gallery-video').forEach((video) => {
+      // The `muted` attribute is NOT applied to the element after a client-side
+      // page swap, and browsers (esp. phones) block autoplay of unmuted video.
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.load();
+      videoObserver!.observe(video);
+      // Tap/click toggles playback as a fallback when autoplay is blocked.
+      video.addEventListener('click', () => (video.paused ? video.play() : video.pause()));
+    });
+  }
+  document.addEventListener('astro:page-load', setupVideos);
+
+  // After a client-side navigation to /…#some-id the browser's own anchor scroll
+  // fires before lazy images settle the layout, so it lands in the wrong place
+  // (worst on phones). Re-apply the scroll a few times until the user takes over.
+  function scrollToHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    let userTookOver = false;
+    const stop = () => { userTookOver = true; };
+    ['touchstart', 'wheel', 'keydown', 'mousedown'].forEach((ev) =>
+      window.addEventListener(ev, stop, { once: true, passive: true })
+    );
+    const go = () => {
+      const el = document.getElementById(id);
+      if (el && !userTookOver) el.scrollIntoView({ behavior: 'instant' as ScrollBehavior, block: 'start' });
+    };
+    requestAnimationFrame(() => requestAnimationFrame(go));
+    [250, 700, 1400].forEach((ms) => setTimeout(go, ms));
+  }
+  document.addEventListener('astro:page-load', scrollToHash);
+
+  function setupReveal() {
+    const root = document.documentElement;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    root.classList.add('js-reveal');
+    const targets = document.querySelectorAll(
+      'main h1, main h2, main .element, main .service-card, main .gallery-video, main form, main .contact-form, main section > *'
+    );
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.setProperty('--reveal-delay', `${(i % 4) * 90}ms`);
+      io.observe(el);
+    });
+  }
+  document.addEventListener('astro:page-load', setupReveal);
+</script>
 </body>
 </html>
 
@@ -95,12 +166,12 @@ const fullCanonicalUrl = new URL(canonicalPath, Astro.site).toString();
   }
   main {
     padding: 1rem;
-  
-   
+    flex: 1;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
   }
   @media (max-width: 768px) {
-    html {
-      font-size: 10px;
-    }
+    main { padding: .75rem; }
   }
 </style>

@@ -7,6 +7,7 @@ const  { translation, lang} = Astro.props
 
 
 <form 
+  id="contact-form"
   name="contact"
   method="POST"
   data-netlify="true"
@@ -72,15 +73,17 @@ const  { translation, lang} = Astro.props
       spellcheck="false"
     >
     <span class="checkmark"></span>
-    {translation.privacy_label} 
-    <a 
-      href={`/${lang}/privacy-policy`} 
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-describedby="privacy-notice"
-    >
-      {translation.privacy_link}
-    </a>
+    <span class="checkbox-text">
+      {translation.privacy_label}
+      <a 
+        href={`/${lang}/privacy-policy`} 
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-describedby="privacy-notice"
+      >
+        {translation.privacy_link}
+      </a>
+    </span>
   </label>
 
 
@@ -167,15 +170,33 @@ document.addEventListener('astro:page-load', () => {
   margin: 2rem auto;
   margin-top: 0;
   padding: 2rem;
-  background: linear-gradient(to bottom right, #3a80c1, #4cb4e7);
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: #fff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
   /* color: #fff; */
   font-family: sans-serif;
   text-align: center;
 }
 
+.input-wrapper input::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.input-wrapper input:-webkit-autofill {
+  -webkit-text-fill-color: #0f172a;
+  box-shadow: 0 0 0 100px #fff inset;
+}
+
+.input-wrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .45);
+}
+
 .contact-form h2 {
+  color: #fff;
+  background: none;
+  -webkit-text-fill-color: #fff;
   font-size: 2.2rem;
   margin-bottom: 0.5rem;
 }
@@ -204,6 +225,11 @@ document.addEventListener('astro:page-load', () => {
 
 .input-wrapper input {
   flex: 1;
+  min-width: 0;
+  background: transparent;
+  color: #0f172a;
+  caret-color: #1d4ed8;
+  box-shadow: none;
   border: none;
   outline: none;
   padding: 0.75rem 0;
@@ -218,10 +244,10 @@ input:placeholder {
 .submit-btn {
   display: block;
   width: 100%;
-  background-color: #0a2640;
+  background-color: #0f172a;
   color: white;
   border: none;
-  padding: 0.75rem;
+  padding: 0.9rem;
   border-radius: 8px;
   font-weight: bold;
   font-size: 1rem;
@@ -233,6 +259,54 @@ input:placeholder {
 .submit-btn:hover {
   background-color: #083351;
 }
+
+/* Navy glass button: strong contrast on the blue form, in both themes */
+.submit-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  padding: 1rem 1.5rem !important;
+  font-size: 1rem;
+  letter-spacing: .08em;
+  color: #fff !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,0) 50%),
+    linear-gradient(135deg, #0a1030 0%, #14246b 100%) !important;
+  background-size: auto !important;
+  border: 1px solid rgba(255, 255, 255, .35) !important;
+  animation: none !important;
+  box-shadow:
+    0 10px 24px -8px rgba(5, 10, 40, .7),
+    inset 0 1px 0 rgba(255, 255, 255, .3);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+/* arrow */
+.submit-btn::after {
+  content: "→";
+  position: static !important;
+  inset: auto !important;
+  background: none !important;
+  transform: none !important;
+  display: inline-block;
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: transform .25s ease;
+}
+.submit-btn:hover {
+  transform: translateY(-2px);
+  border-color: #fff !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24) 0%, rgba(255,255,255,0) 55%),
+    linear-gradient(135deg, #0d153f 0%, #1c33a0 100%) !important;
+  box-shadow:
+    0 14px 30px -8px rgba(5, 10, 40, .8),
+    0 0 0 4px rgba(255, 255, 255, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .35);
+}
+.submit-btn:hover::after { transform: translateX(6px) !important; }
+.submit-btn:active { transform: translateY(1px); }
+.submit-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 
 .submit-btn:active {
   background-color: #0a2640;
@@ -251,7 +325,8 @@ input:placeholder {
 
   .checkbox-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
     margin: 2rem 0;
     cursor: pointer;
     user-select: none;
@@ -264,7 +339,19 @@ input:placeholder {
     width: 0;
   }
 
+  .checkbox-text {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
   .checkmark {
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: rgba(255, 255, 255, .15);
+    border-color: #fff !important;
     display: inline-block;
     width: 20px;
     height: 20px;

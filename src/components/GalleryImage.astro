@@ -102,9 +102,10 @@ const { before, after, translation } = Astro.props;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    border-radius: 8px;
+    border-radius: 1.25rem;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-lg);
+    min-width: 0;
     aspect-ratio: 16/9;
   }
   

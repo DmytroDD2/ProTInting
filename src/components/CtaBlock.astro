@@ -1,0 +1,47 @@
+---
+// Reusable end-of-page call to action: leads to the contact form or a phone call.
+const { lang = 'cs', translation } = Astro.props;
+---
+
+<section class="cta-block">
+  <h2>{translation.title}</h2>
+  <p>{translation.text}</p>
+  <div class="cta-actions">
+    <a class="cta-primary" href={`/${lang}/kontakty#contact-form`}>{translation.button}</a>
+    <a class="cta-secondary" href="tel:+420725923395"><span class="call-label">{translation.call}:</span> <span class="call-number">+420 725 923 395</span></a>
+  </div>
+</section>
+
+<style>
+  .cta-block {
+    text-align: center;
+    margin: 3rem auto 2rem;
+    padding: 3rem 1.5rem;
+    max-width: 56rem;
+    border-radius: var(--radius-xl);
+    color: #fff;
+    background: var(--gradient-brand);
+    box-shadow: var(--shadow-lg);
+  }
+  .cta-block h2 { color: #fff; -webkit-text-fill-color: #fff; background: none; margin: 0 0 .75rem; font-size: clamp(1.4rem, 4vw, 2rem); }
+  .cta-block p { margin: 0 auto 1.5rem; max-width: 36rem; opacity: .9; }
+  .cta-actions { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+  .cta-primary, .cta-secondary {
+    padding: .85rem 1.75rem;
+    border-radius: 50rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform .2s ease, background-color .2s ease;
+  }
+  .cta-primary { background: #fff; color: #0b2d73; }
+  .cta-secondary { border: 2px solid rgba(255,255,255,.7); color: #fff; }
+  .cta-primary:hover, .cta-secondary:hover { transform: translateY(-2px); }
+  .cta-secondary:hover { background: rgba(255,255,255,.15); }
+
+  .cta-secondary { display: inline-flex; flex-wrap: wrap; justify-content: center; column-gap: .4rem; }
+  .call-number { white-space: nowrap; }
+  @media (max-width: 480px) {
+    .cta-actions { flex-direction: column; align-items: stretch; }
+    .cta-primary, .cta-secondary { text-align: center; justify-content: center; }
+  }
+</style>

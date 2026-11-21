@@ -38,7 +38,7 @@ const isActive = (currentPath, linkPath) => {
 
   li{}
   .active{
-    fill: #0B2C8F;
+    fill: var(--color-text-active-nav);
   }
   a {
     display: inline-block;
@@ -48,8 +48,8 @@ const isActive = (currentPath, linkPath) => {
     /* color: #333; */
     color: var(--color-text);
     font-weight: 600;
-    border-radius: 6px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 999px;
+    transition: background-color 0.25s ease, color 0.25s ease;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,9 +64,12 @@ const isActive = (currentPath, linkPath) => {
 
     /* box-shadow: 0 4px 10px rgba(0,123,255,0.6); */
   }
-  /* a:hover {
-    background-color: #e0e0e0;
-  } */
+  a:hover {
+    background-color: var(--color-hover);
+  }
+  a.active {
+    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  }
 
   a:active {
     color: #e0e0e0;
@@ -75,8 +78,28 @@ const isActive = (currentPath, linkPath) => {
   @media (max-width: 768px) {
     .icon {
       display: inline;
+      flex-shrink: 0;
+      width: 1.6rem;
+      height: 1.6rem;
     }
-	}
+    a {
+      width: 100%;
+      justify-content: flex-start;
+      gap: 1rem;
+      margin: 0;
+      padding: 1rem 1.2rem;
+      border-radius: 1rem;
+      font-size: 1.05rem;
+    }
+    a.active {
+      color: #fff;
+      background: var(--gradient-brand);
+      box-shadow: 0 8px 20px -8px rgba(14, 83, 221, .7);
+    }
+    a.active .icon, .icon.active {
+      fill: #fff;
+    }
+  }
  
 </style>
 
