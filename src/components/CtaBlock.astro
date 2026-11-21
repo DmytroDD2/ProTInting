@@ -7,7 +7,7 @@ const { lang = 'cs', translation } = Astro.props;
   <h2>{translation.title}</h2>
   <p>{translation.text}</p>
   <div class="cta-actions">
-    <a class="cta-primary" href={`/${lang}/kontakty#contact-form`}>{translation.button}</a>
+    <a class="cta-primary" href={`/${lang}/kontakty/#contact-form`}>{translation.button}</a>
     <a class="cta-secondary" href="tel:+420725923395"><span class="call-label">{translation.call}:</span> <span class="call-number">+420 725 923 395</span></a>
   </div>
 </section>

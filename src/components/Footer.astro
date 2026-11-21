@@ -17,7 +17,7 @@ const t = await import(`../translations/${lang}.json`).catch(() => ({}));
   <div class="inf">
     <section class="contacts">  
       <h3>{t.menu.contacts}</h3>
-      {!onContactPage && <a class="footer-cta" href={`/${lang}/kontakty#contact-form`}>{t.cta.button}</a>}
+      {!onContactPage && <a class="footer-cta" href={`/${lang}/kontakty/#contact-form`}>{t.cta.button}</a>}
       <ul>
         <li>{t.contacts.vanue.country}</li>
         <li>{t.contacts.vanue.city}</li>
